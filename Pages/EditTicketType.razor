@@ -1,0 +1,26 @@
+﻿@page "/updatetickettype/{id}"
+@inherits UpdateTicketTypeBase
+
+<h3 style ="margin-top: 1cm">Update Ticket Type</h3>
+
+<EditForm Model="ticketType" OnValidSubmit="UpdateTicketType">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group" style="width: 50%; margin-top: 1cm">
+        <label for="TicketTypeName">Ticket Type Name:</label>
+        <InputText id="TicketTypeName" @bind-Value="ticketType.TicketTypeName" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="margin-top: 0.5cm">Update</button>
+</EditForm>
+
+@if (isSuccess)
+{
+    <p class="text-success">Update successful!</p>
+}
+
+@if (error != null)
+{
+    <p class="text-danger">@error</p>
+}

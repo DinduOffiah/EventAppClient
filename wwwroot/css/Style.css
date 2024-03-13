@@ -1,0 +1,20 @@
+﻿body {
+}
+
+
+.btn {
+    margin-right: 10px;
+}
+
+/*.table-header {
+    border-bottom: 1px solid black;
+    width: 50%;
+}*/
+
+.button-container {
+    text-align: right;
+}
+
+.loading{
+    text-align: center;
+}

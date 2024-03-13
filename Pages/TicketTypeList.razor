@@ -1,0 +1,50 @@
+﻿@page "/tickettypelist"
+@inherits TicketTypeListBase
+
+<PageTitle>Ticket Types</PageTitle>
+
+<button type="button" class="btn btn-primary" style="margin-top: 1cm" @onclick="NavigateToCreateTicketType">
+    <i class="fa fa-plus"></i> Create Ticket Type
+</button>
+
+@if (ticketTypes == null)
+{
+    <div class="loading">
+        <h4 style="text-align: center; margin-top: 1cm">Loading...</h4>
+    </div>
+}
+else
+{
+    @if (ticketTypes.Any())
+    {
+        <div class="d-flex justify-content-center">
+            <table class="table" style="width: 50%; margin-top: 1cm">
+                <thead>
+                    <tr>
+                        <th colspan="2" class="table-header">Ticket Types</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ticketType in ticketTypes)
+                    {
+                        <tr>
+                            <td>@ticketType.TicketTypeName</td>
+                            <td class="button-container">
+                                <button type="button" class="btn btn-secondary btn-sm" @onclick="() => NavigateToUpdateTicketType(ticketType.TicketTypeId)">
+                                    <i class="fa fa-pencil"></i> Edit
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm" @onclick="() => NavigateToDeleteTicketType(ticketType.TicketTypeId)">
+                                    <i class="fa fa-trash"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p><em>No ticket type found.</em></p>
+    }
+}

@@ -1,0 +1,51 @@
+﻿@page "/updateevent/{id}"
+@inherits EditEventBase
+
+<h3 style="margin-top: 1cm">Update Event</h3>
+
+<EditForm Model="evnt" OnValidSubmit="UpdateEvent">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group" style="width: 50%; margin-top: 1cm">
+        <label for="EventName">Event Name:</label>
+        <InputText id="EventName" @bind-Value="evnt.EventName" class="form-control" />
+    </div>
+
+    <div class="form-group" style="width: 50%; margin-top: 1cm">
+        <label for="EventDate">Event Date:</label>
+        <InputDate id="EventDate" @bind-Value="evnt.EventDate" class="form-control" />
+    </div>
+
+    <div class="form-group" style="width: 50%; margin-top: 1cm">
+        <label for="EventTypeId">Event Type:</label>
+        <InputNumber id="EventTypeId" @bind-Value="evnt.EventTypeId" class="form-control" />
+    </div>
+
+    <div class="form-group" style="width: 50%; margin-top: 1cm">
+        <label for="TicketTypeId">Ticket Type:</label>
+        <InputNumber id="TicketTypeId" @bind-Value="evnt.TicketTypeId" class="form-control" />
+    </div>
+    
+    <div class="form-group" style="width: 50%; margin-top: 1cm">
+        <label for="Location">Location:</label>
+        <InputText id="Location" @bind-Value="evnt.Location" class="form-control" />
+    </div>
+
+    <div class="form-group" style="width: 50%; margin-top: 1cm">
+        <label for="Limit">Limit:</label>
+        <InputNumber id="Limit" @bind-Value="evnt.Limit" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="margin-top: 0.5cm">Update</button>
+</EditForm>
+
+@if (isSuccess)
+{
+    <p class="text-success">Update successful!</p>
+}
+
+@if (error != null)
+{
+    <p class="text-danger">@error</p>
+}

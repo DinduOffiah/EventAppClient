@@ -1,0 +1,21 @@
+﻿@page "/createtickettype"
+@inherits CreateTicketTypeBase
+
+<h3 style="margin-top: 1cm">Create Ticket Type</h3>
+
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="alert alert-danger">@ErrorMessage</div>
+}
+
+<EditForm Model="@TicketType" OnValidSubmit="@CreateTicketType" class="create-ticket-type">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group" style="width: 50%; margin-top: 1cm">
+        <label for="name">Name:</label>
+        <InputText id="name" class="form-control" @bind-Value="TicketType.TicketTypeName" />
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="margin-top: 0.5cm">Create</button>
+</EditForm>

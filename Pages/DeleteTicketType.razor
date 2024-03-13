@@ -1,0 +1,16 @@
+﻿@page "/deletetickettype/{Id}"
+@inherits DeleteTicketTypeBase
+
+<h3>Delete Ticket Type</h3>
+
+@if (ticketType != null)
+{
+    <p>Are you sure you want to delete the ticket type '@ticketType.TicketTypeName'?</p>
+
+    <button class="btn btn-danger" @onclick="ConfirmDelete">Delete</button>
+    <button class="btn btn-secondary" @onclick="CancelDelete">Cancel</button>
+}
+else
+{
+    <p>Loading...</p>
+}

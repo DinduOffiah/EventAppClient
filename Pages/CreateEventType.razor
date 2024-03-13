@@ -1,0 +1,21 @@
+﻿@page "/createeventtype"
+@inherits CreateEventTypeBase
+
+<h3 style="margin-top: 1cm">Create Event Type</h3>
+
+@if (!string.IsNullOrEmpty(ErrorMessage))
+{
+    <div class="alert alert-danger">@ErrorMessage</div>
+}
+
+<EditForm Model="@EventType" OnValidSubmit="@CreateEventType" class="create-event-type">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group" style="width: 50%; margin-top: 1cm">
+        <label for="name">Name:</label>
+        <InputText id="name" class="form-control" @bind-Value="EventType.EventTypeName" />
+    </div>
+
+    <button type="submit" class="btn btn-primary" style="margin-top: 0.5cm">Create</button>
+</EditForm>

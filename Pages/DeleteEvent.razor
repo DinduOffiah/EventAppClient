@@ -1,0 +1,25 @@
+﻿@page "/deleteevent/{Id}"
+@inherits DeleteEventBase
+
+<h3>Delete Event</h3>
+
+@if (eventItem != null)
+{
+    <p>Are you sure you want to delete the event '@eventItem.EventName'?</p>
+
+    <div>
+        <p><strong>Event Name:</strong> @eventItem.EventName</p>
+        <p><strong>Event Date:</strong> @eventItem.EventDate?.ToString("g")</p>
+        <p><strong>Location:</strong> @eventItem.Location</p>
+        <p><strong>Ticket Type ID:</strong> @eventItem.TicketTypeId</p>
+        <p><strong>Event Type ID:</strong> @eventItem.EventTypeId</p>
+        <p><strong>Limit:</strong> @eventItem.Limit</p>
+    </div>
+
+    <button class="btn btn-danger" @onclick="ConfirmDelete">Delete</button>
+    <button class="btn btn-secondary" @onclick="CancelDelete">Cancel</button>
+}
+else
+{
+    <p>Loading...</p>
+}

@@ -3,9 +3,18 @@
 
 <PageTitle>Events</PageTitle>
 
-<button type="button" class="btn btn-primary" style="margin-top: 1cm" @onclick="NavigateToCreateEvent">
-    <i class="fa fa-plus"></i> Create Event
-</button>
+<div class="text-center">
+    <form class="search-container">
+        <div class="wrap">
+            <div class="search">
+                <input type="text" class="searchTerm" placeholder="Search event">
+                <button type="submit" class="searchButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
 
 @if (events == null)
 {

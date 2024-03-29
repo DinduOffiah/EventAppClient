@@ -53,3 +53,36 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+
+/*Event Card*/
+.event-card {
+    width: 228px; /* Reduced width by 40% */
+    position: relative;
+    box-shadow: 0 2px 7px #dfdfdf;
+    margin: 30px auto; /* Reduced margin */
+    background: #fafafa;
+    margin-bottom: 20px; /* Add margin for spacing between columns */
+    flex: 0 0 calc(33.33% - 20px); /* Adjust column width as needed */
+    box-sizing: border-box;
+}
+
+.card-header, .card-image, .card-location, .card-name, .card-date, .card-footer {
+    min-height: 20px; /* Adjust the min-height as needed for each element */
+    /* This ensures that the space is reserved even if the content is missing */
+}
+
+/* Additional styles to ensure the button stays at the bottom */
+.card-footer {
+    margin-top: auto;
+}
+
+.other-buttons .btn-sm {
+    border: 2px solid transparent; /* Default state with transparent border */
+    /* Other styling properties */
+}
+
+    .other-buttons .btn-sm:hover {
+        border: 2px solid #a9a9a9; /* Change #0096EE to the color you want on hover */
+        /* Other styling properties for hover state */
+    }

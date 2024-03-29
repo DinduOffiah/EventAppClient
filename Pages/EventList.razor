@@ -27,35 +27,40 @@ else
     if (events.Any())
     {
         <div class="d-flex justify-content-center">
-            <table class="table" style="width: 50%; margin-top: 1cm">
-                <thead>
-                    <tr>
-                        <th class="table-header">Event Name</th>
-                        <th class="table-header">Event Date</th>
-                        <th class="table-header">Location</th>
-                        <th class="table-header">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var evnt in events)
-                    {
-                        <tr>
-                            <td>@evnt.EventName</td>
-                            <td>@evnt.EventDate</td>
-                            <td>@evnt.Location</td>
-                            <td class="button-container">
-                                <button type="button" class="btn btn-secondary btn-sm" @onclick="() => NavigateToUpdateEvent(evnt.EventId)">
-                                    <i class="fa fa-pencil"></i> Edit
-                                </button>
-                                <button type="button" class="btn btn-danger btn-sm" @onclick="() => NavigateToDeleteEvent(evnt.EventId)">
-                                    <i class="fa fa-trash"></i> Delete
-                                </button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+            @foreach (var evnt in events)
+                {
+                <div class="event-card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="event-type">@evnt.EventTypeName</h5>
+                        <span class="badge bg-success text-white">@evnt.TicketTypeName</span>
+                    </div>
+                    <div class="card-image">
+                        <img class="" src="@evnt.Image" alt="@evnt.EventName" style="max-width: 150px" />
+                    </div>
+                    <p class="card-location"><i class="fa fa-map-marker"></i> @evnt.Location</p>
+                    <b><h5 class="card-name">@evnt.EventName</h5></b>
+                    <h6 class="card-date mb-2 text-muted">@evnt.EventDate</h6>
+                    <div class="card-footer d-flex justify-content-between align-items-center">
+                        <div class="buy-button">
+                            <button type="button" class="btn btn-success btn-sm">
+                                <i class="fa fa-credit-card"></i> Buy Ticket
+                            </button>
+                        </div>
+                        <div class="other-buttons">
+                            <button type="button" class="btn-sm">
+                                <i class="fa fa-info-circle"></i>
+                            </button>
+                            <button type="button" class="btn-sm">
+                                <i class="fa fa-bookmark-o"></i>
+                            </button>
+                            <button type="button" class="btn-sm">
+                                <i class="fa fa-share-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                }
+        </div> 
     }
     else
     {

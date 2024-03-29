@@ -10,5 +10,7 @@
         public int TicketTypeId { get; set; }
         public int EventTypeId { get; set; }
         public int? Limit { get; set; }
+        public string? EventTypeName { get; set; }
+        public string? TicketTypeName { get; set; }
     }
 }

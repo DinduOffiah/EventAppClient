@@ -72,6 +72,10 @@
     /* This ensures that the space is reserved even if the content is missing */
 }
 
+.card-location, .card-name, .card-date {
+    margin-left: 10px;
+}
+
 /* Additional styles to ensure the button stays at the bottom */
 .card-footer {
     margin-top: auto;

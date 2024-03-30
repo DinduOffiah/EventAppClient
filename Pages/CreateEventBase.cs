@@ -54,5 +54,38 @@ namespace EventAppClient.Pages
                 ErrorMessage = $"An error occurred: {ex.Message}";
             }
         }
+
+        //Selecting TicketTypeNames and EventTypeNames instead of Id
+        protected List<EventType> EventTypes { get; set; } = new List<EventType>();
+        protected List<TicketType> TicketTypes { get; set; } = new List<TicketType>();
+        protected bool IsDataLoaded { get; set; } = false;
+
+        protected override async Task OnInitializedAsync()
+        {
+
+            try
+            {
+                // Fetch data from API endpoints
+                EventTypes = await Http.GetFromJsonAsync<List<EventType>>("api/EventType");
+                TicketTypes = await Http.GetFromJsonAsync<List<TicketType>>("api/TicketType");
+
+                // Ensure lists are not null
+                if (EventTypes == null || TicketTypes == null)
+                {
+                    // Handle null lists (e.g., show an error message)
+                    ErrorMessage = "Failed to load event or ticket types.";
+                }
+                else
+                {
+                    IsDataLoaded = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception (e.g., log or display an error message)
+                ErrorMessage = $"An error occurred: {ex.Message}";
+            }
+        }
+
     }
 }

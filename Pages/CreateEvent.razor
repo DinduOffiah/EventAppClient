@@ -1,56 +1,69 @@
 ﻿@page "/createevent"
 @inherits CreateEventBase
 
-<h3 style="margin-top: 1cm">Create Event</h3>
-
-@if (!string.IsNullOrEmpty(ErrorMessage))
+@if (IsDataLoaded)
 {
-    <div class="alert alert-danger">@ErrorMessage</div>
-}
+    <h3 style="margin-top: 1cm">Create Event</h3>
 
-<EditForm Model="@Event" OnValidSubmit="@CreateEvent" class="create-event">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <div class="form-group" style="width: 50%; margin-top: 1cm">
-        <label for="name">Event Name:</label>
-        <InputText id="name" class="form-control" @bind-Value="Event.EventName" />
-    </div>
-
-    <div class="form-group" style="width: 50%">
-        <label for="date">Event Date:</label>
-        <InputDate id="date" class="form-control" @bind-Value="Event.EventDate" />
-    </div>
-
-    <div class="form-group" style="width: 50%">
-        <label for="location">Location:</label>
-        <InputText id="location" class="form-control" @bind-Value="Event.Location" />
-    </div>
-
-    <div class="form-group" style="width: 50%">
-        <label for="eventTypeId">Event Type:</label>
-        <InputNumber id="eventTypeId" class="form-control" @bind-Value="Event.EventTypeId" />
-    </div>
-
-    <div class="form-group" style="width: 50%">
-        <label for="ticketTypeId">Ticket Type:</label>
-        <InputNumber id="ticketTypeId" class="form-control" @bind-Value="Event.TicketTypeId" />
-    </div>
-
-    <div class="form-group" style="width: 50%">
-        <label for="limit">Limit:</label>
-        <InputNumber id="limit" class="form-control" @bind-Value="Event.Limit" />
-    </div>
-
-    <div class="form-group" style="width: 50%">
-        <label for="image">Image:</label>
-        <InputFile id="image" class="form-control" OnChange="HandleFileUpload" />
-    </div>
-    @if (Event.Image != null)
+    @if (!string.IsNullOrEmpty(ErrorMessage))
     {
-        <img src="@($"data:image/png;base64,{Convert.ToBase64String(Event.Image)}")" alt="Event Image" />
+        <div class="alert alert-danger">@ErrorMessage</div>
     }
 
+    <EditForm Model="@Event" OnValidSubmit="@CreateEvent" class="create-event">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
-    <button type="submit" class="btn btn-primary" style="margin-top: 0.5cm">Create</button>
-</EditForm>
+        <div class="form-group" style="width: 50%; margin-top: 1cm">
+            <label for="name">Event Name:</label>
+            <InputText id="name" class="form-control" @bind-Value="Event.EventName" />
+        </div>
+
+        <div class="form-group" style="width: 50%">
+            <label for="date">Event Date:</label>
+            <InputDate id="date" class="form-control" @bind-Value="Event.EventDate" />
+        </div>
+
+        <div class="form-group" style="width: 50%">
+            <label for="location">Location:</label>
+            <InputText id="location" class="form-control" @bind-Value="Event.Location" />
+        </div>
+
+        <div class="form-group" style="width: 50%">
+            <label for="eventTypeId">Event Type:</label>
+            <InputSelect id="eventTypeId" class="form-control form-select" @bind-Value="Event.EventTypeId">
+                @foreach (var eventType in EventTypes)
+                {
+                    <option value="@eventType?.EventTypeId">@eventType?.EventTypeName</option>
+                }
+            </InputSelect>
+        </div>
+
+        <div class="form-group" style="width: 50%">
+            <label for="ticketTypeId">Ticket Type:</label>
+            <InputNumber id="ticketTypeId" class="form-control" @bind-Value="Event.TicketTypeId" />
+        </div>
+
+        <div class="form-group" style="width: 50%">
+            <label for="limit">Limit:</label>
+            <InputNumber id="limit" class="form-control" @bind-Value="Event.Limit" />
+        </div>
+
+        <div class="form-group" style="width: 50%">
+            <label for="image">Image:</label>
+            <InputFile id="image" class="form-control" OnChange="HandleFileUpload" />
+        </div>
+        @if (Event.Image != null)
+        {
+            <img src="@($"data:image/png;base64,{Convert.ToBase64String(Event.Image)}")" alt="Event Image" />
+        }
+
+
+        <button type="submit" class="btn btn-primary" style="margin-top: 0.5cm">Create</button>
+    </EditForm>
+
+}
+else
+{
+    <h4>Loading...</h4>
+}

@@ -35,7 +35,15 @@ else
                         <span class="badge bg-success text-white">@evnt.TicketTypeName</span>
                     </div>
                     <div class="card-image">
-                        <img class="" src="@evnt.Image" alt="@evnt.EventName" style="max-width: 150px" />
+                        @* <img class="" src="@evnt.Image" alt="@evnt.EventName" style="max-width: 150px" /> *@
+                        @if (@evnt.Image != null && @evnt.Image.Length > 0)
+                        {
+                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(@evnt.Image)" alt="Student Image" style="width: 370px; height: 200px;" />
+                        }
+                        else
+                        {
+                            <span>No Image</span>
+                        }
                     </div>
                     <p class="card-location"><i class="fa fa-map-marker"></i> @evnt.Location</p>
                     <b><h5 class="card-name">@evnt.EventName</h5></b>

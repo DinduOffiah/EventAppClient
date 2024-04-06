@@ -30,6 +30,8 @@ namespace EventAppClient.Pages
             }
         }
 
+
+
         // Method to create the event
         protected async Task CreateEvent()
         {

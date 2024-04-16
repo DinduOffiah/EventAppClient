@@ -38,16 +38,35 @@ else
                         <span class="badge bg-success text-white">@evnt.TicketTypeName</span>
                     </div>
                     <div class="card-image">
-                        @* <img class="" src="@evnt.Image" alt="@evnt.EventName" style="max-width: 150px" /> *@
                         @if (@evnt.Image != null && @evnt.Image.Length > 0)
                         {
-                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(@evnt.Image)" alt="Student Image" style="width: 370px; height: 200px;" />
+                            <img src="data:image/jpeg;base64,@Convert.ToBase64String(@evnt.Image)" alt="Event Image" style="width: 370px; height: 200px;" />
                         }
                         else
                         {
-                            <img src="https://www.aal-europe.eu/wp-content/uploads/2013/04/events_medium.jpg" alt="Default Event Image" style="width: 370px; height: 200px;" />
+                            if (@evnt.EventTypeName == "Party")
+                            {
+                                <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fturbofuture.com%2Finternet%2FParty-Quotes-and-Caption-Ideas&psig=AOvVaw0RYce7yKny3Sq2WzwhnBZC&ust=1713371074103000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKiThOSSx4UDFQAAAAAdAAAAABAE" alt="Party Event Image" style="width: 370px; height: 200px;" />
+                            }
+                            else if (@evnt.EventTypeName == "Carnival")
+                            {
+                                <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.alimentarium.org%2Fen%2Fstory%2Fcarnival&psig=AOvVaw1zV8HF5eFFsiJPRk986Zrl&ust=1713371086330000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCIDyu-mSx4UDFQAAAAAdAAAAABAF" alt="Carnival Event Image" style="width: 370px; height: 200px;" />
+                            }
+                            else if (@evnt.EventTypeName == "Picnic")
+                            {
+                                <img src="https://images-cdn.welcomesoftware.com/Zz0yYzk1ZDRmNmI2NGMxMWViOGRiNDk1MTgxY2IxYmM0Yw==/Zz1iZWJjZWViNWVhOWJiYzIyYzVlOTI1NTExOGQxMGFjYQ%3D%3D.jpg?width=1366" alt="Picnic Event Image" style="width: 370px; height: 200px;" />
+                            }
+                            else if (@evnt.EventTypeName == "Concert")
+                            {
+                                <img src="https://media.istockphoto.com/id/1461816749/photo/a-crowd-of-people-with-raised-arms-during-a-music-concert-with-an-amazing-light-show-black.jpg?s=612x612&w=0&k=20&c=-hdWCLDP5AI9A3mjq3JPMPKhXxJ2P1iItPDFktQHxX8=" alt="Concert Event Image" style="width: 370px; height: 200px;" />
+                            }
+                            else
+                            {
+                                <img src="https://www.aal-europe.eu/wp-content/uploads/2013/04/events_medium.jpg" alt="Default Event Image" style="width: 370px; height: 200px;" />
+                            }
                         }
                     </div>
+
                     <p class="card-location"><i class="fa fa-map-marker"></i> @evnt.Location</p>
                     <b><h5 class="card-name">@evnt.EventName</h5></b>
                     <h6 class="card-date mb-2 text-muted">@evnt.EventDate</h6>

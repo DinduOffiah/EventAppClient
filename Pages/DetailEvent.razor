@@ -1,0 +1,48 @@
+﻿@page "/eventdetail/{eventId:int}"
+@inject HttpClient Http
+
+@if (eventDetail != null)
+{
+    <div class="row">
+        <div class="col-md-8 offset-2">
+            <div class="card mb-12">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-info">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @eventDetail.EventName
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <img src="@($"data:image/png;base64,{Convert.ToBase64String(eventDetail.Image)}")" width="100%" alt="@eventDetail.EventName">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <p class="card-text">@eventDetail.Description</p>
+                            <p class="card-text"><b>Location: </b>@eventDetail.Location</p>
+                            <p class="card-text"><b>Date: </b>@eventDetail.EventDate.ToString("dd MMM yyyy")</p>
+                            <!-- Add other event details here -->
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer">
+                            <p class="card-text">
+                                <a class="btn btn-outline-primary float-right" href="/eventlist">
+                                    Back to List
+                                </a>
+                                <!-- Add edit and delete buttons if needed -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <h4>Loading...</h4>
+}

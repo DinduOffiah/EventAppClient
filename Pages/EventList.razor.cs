@@ -41,5 +41,10 @@ namespace EventAppClient.Pages
             NavigationManager.NavigateTo($"/deleteevent/{id}");
         }
 
+        protected void NavigateToDetailEvent(int id)
+        {
+            NavigationManager.NavigateTo($"/detailevent/{id}");
+        }
+
     }
 }

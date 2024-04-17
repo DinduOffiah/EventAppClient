@@ -32,6 +32,8 @@ namespace EventAppClient.Pages
                     evnt.TicketTypeId = response.TicketTypeId;
                     evnt.EventTypeId = response.EventTypeId;
                     evnt.Limit = response.Limit;
+                    evnt.EventTypeName = response.EventTypeName;
+                    evnt.TicketTypeName = response.TicketTypeName;
                 }
                 else
                 {

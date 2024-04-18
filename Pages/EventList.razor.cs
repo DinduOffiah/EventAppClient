@@ -22,6 +22,7 @@ namespace EventAppClient.Pages
             try
             {
                 events = await Http.GetFromJsonAsync<List<Event>>("api/Events");
+                events = events.OrderByDescending(e => e.EventId).ToList();
             }
             catch (Exception ex)
             {

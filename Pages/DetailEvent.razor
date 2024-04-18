@@ -35,7 +35,7 @@
                             }
                             else if (@evnt.EventTypeName == "Picnic")
                             {
-                                <img src="https://images-cdn.welcomesoftware.com/Zz0yYzk1ZDRmNmI2NGMxMWViOGRiNDk1MTgxY2IxYmM0Yw==/Zz1iZWJjZWViNWVhOWJiYzIyYzVlOTI1NTExOGQxMGFjYQ%3D%3D.jpg?width=1366" alt="Picnic Event Image" width="100%" />
+                                <img src="https://images-cdn.welcomesoftware.com/Zz0yYzk1ZDRmNmI2NGMxMWViOGRiNDk1MTgxY2IxYmM0Yw==/Zz1iZWJjZWViNWVhOWJiYzIyYzVlOTI1NTExOGQxMGFjYQ%3D%3D.jpg?width=1366" alt="Picnic Event Image" width="100%" height="250px" />
                             }
                             else if (@evnt.EventTypeName == "Concert")
                             {
@@ -68,9 +68,9 @@
                         <p class="card-text">
                             <b>About Event: </b>
                             <hr />
-                            <span>
-                                @*This should contain the event description*@
-                            </span>
+                            <p>
+                                @evnt.Description
+                            </p>
                         </p>
                         <p class="card-text"><b>Event Countdown: </b> @*This contain the countdown*@ </p>
                     </div>

@@ -16,6 +16,8 @@
         public string? EventTypeName { get; set; }
         public string? TicketTypeName { get; set; }
         public bool IsMultiDay { get; set; }
+        public bool IsOngoing { get; set; }
+        public string? Countdown { get; set; }
 
     }
 }

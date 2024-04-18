@@ -4,6 +4,7 @@ using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using EventAppClient.Models;
+using Microsoft.JSInterop;
 
 namespace EventAppClient.Pages
 {
@@ -15,6 +16,7 @@ namespace EventAppClient.Pages
 
         protected Event evnt = new Event();
         protected string error;
+        protected System.Timers.Timer timer;
 
         protected override async Task OnInitializedAsync()
         {
@@ -38,15 +40,52 @@ namespace EventAppClient.Pages
                     evnt.EventTypeName = response.EventTypeName;
                     evnt.TicketTypeName = response.TicketTypeName;
                 }
+
                 else
                 {
                     error = "Event not found.";
                 }
+
+                StartCountdown(evnt);
+
             }
             catch (Exception ex)
             {
                 error = $"An error occurred: {ex.Message}";
             }
+        }
+
+
+        private void StartCountdown(Event evnt)
+        {
+            timer = new System.Timers.Timer(1000);
+            timer.Elapsed += (sender, e) => UpdateCountdown(evnt);
+            timer.Start();
+        }
+
+        private void UpdateCountdown(Event evnt)
+        {
+            var now = DateTime.Now;
+            var eventDate = evnt.StartDate ?? evnt.EventDate ?? now;
+
+            if (now >= eventDate)
+            {
+                evnt.IsOngoing = true;
+                evnt.Countdown = "Ongoing";
+            }
+            else
+            {
+                var timeRemaining = eventDate - now;
+                evnt.Countdown = $"{timeRemaining.Days}d {timeRemaining.Hours}h {timeRemaining.Minutes}m {timeRemaining.Seconds}s";
+            }
+
+            InvokeAsync(StateHasChanged);
+        }
+
+
+        public void Dispose()
+        {
+            timer?.Dispose();
         }
     }
 }

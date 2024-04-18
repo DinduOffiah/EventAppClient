@@ -89,5 +89,11 @@ namespace EventAppClient.Pages
             }
         }
 
+        protected void ToggleMultiDay(ChangeEventArgs e)
+        {
+            Event.IsMultiDay = (bool)e.Value;
+        }
+
+
     }
 }

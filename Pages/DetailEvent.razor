@@ -51,7 +51,15 @@
                     <div class="card-body">
                             <p class="card-text"><b>Event Name: </b>@evnt.EventName </p>
                             <p class="card-text"><b>Location: </b>@evnt.Location </p>
-                            <p class="card-text"><b>Start Date: </b>@evnt.EventDate </p>
+                            @if (evnt.IsMultiDay)
+                            {
+                                <p class="card-text"><b>Start Date: </b>@evnt.StartDate </p>
+                                <p class="card-text"><b>End Date: </b>@evnt.EndDate </p>
+                            }
+                            else
+                            {
+                                <p class="card-text"><b>Event Date: </b>@evnt.EventDate </p>
+                            }
                         <p class="card-text"><b>End Date: </b></p>
                         <p class="card-text ">
                             <b>Status: </b>

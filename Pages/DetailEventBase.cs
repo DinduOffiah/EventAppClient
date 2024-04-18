@@ -28,6 +28,9 @@ namespace EventAppClient.Pages
                     evnt.EventName = response.EventName;
                     evnt.Image = response.Image;
                     evnt.EventDate = response.EventDate;
+                    evnt.StartDate = response.StartDate;
+                    evnt.EndDate = response.EndDate;
+                    evnt.Description = response.Description;
                     evnt.Location = response.Location;
                     evnt.TicketTypeId = response.TicketTypeId;
                     evnt.EventTypeId = response.EventTypeId;

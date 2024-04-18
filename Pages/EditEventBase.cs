@@ -22,6 +22,21 @@ namespace EventAppClient.Pages
         {
             try
             {
+                // Fetch data from API endpoints
+                EventTypes = await Http.GetFromJsonAsync<List<EventType>>("api/EventType");
+                TicketTypes = await Http.GetFromJsonAsync<List<TicketType>>("api/TicketType");
+
+                // Ensure lists are not null
+                if (EventTypes == null || TicketTypes == null)
+                {
+                    // Handle null lists (e.g., show an error message)
+                    error = "Failed to load event or ticket types.";
+                }
+                else
+                {
+                    IsDataLoaded = true;
+                }
+
                 var response = await Http.GetFromJsonAsync<Event>($"api/Events/{Id}");
 
                 if (response != null)
@@ -34,6 +49,9 @@ namespace EventAppClient.Pages
                     evnt.TicketTypeId = response.TicketTypeId;
                     evnt.EventTypeId = response.EventTypeId;
                     evnt.Limit = response.Limit;
+                    evnt.StartDate = response.StartDate;
+                    evnt.EndDate = response.EndDate;
+                    evnt.Description = response.Description;
                 }
                 else
                 {
@@ -66,6 +84,29 @@ namespace EventAppClient.Pages
             {
                 error = $"An error occurred: {ex.Message}";
             }
+        }
+
+        // Method to handle file upload
+        protected async Task HandleFileUpload(InputFileChangeEventArgs e)
+        {
+            var imageFile = e.File;
+
+            if (imageFile != null)
+            {
+                using var memoryStream = new MemoryStream();
+                await imageFile.OpenReadStream().CopyToAsync(memoryStream);
+                evnt.Image = memoryStream.ToArray();
+            }
+        }
+
+        //Selecting TicketTypeNames and EventTypeNames instead of Id
+        protected List<EventType> EventTypes { get; set; } = new List<EventType>();
+        protected List<TicketType> TicketTypes { get; set; } = new List<TicketType>();
+        protected bool IsDataLoaded { get; set; } = false;
+
+        protected void ToggleMultiDay(ChangeEventArgs e)
+        {
+            evnt.IsMultiDay = (bool)e.Value;
         }
     }
 

@@ -86,7 +86,7 @@ else
                             <button type="button" class="btn-sm">
                                 <i class="fa fa-bookmark-o"></i>
                             </button>
-                            <button type="button" class="btn-sm">
+                            <button type="button" class="btn-sm" onclick="shareEvent('@evnt.EventName', '@GetEventDetailsUrl(evnt.EventId)')">
                                 <i class="fa fa-share-alt"></i>
                             </button>
                         </div>
@@ -100,3 +100,20 @@ else
         <p><em>No event found.</em></p>
     }
 }
+<script>
+    function shareEvent(eventName, eventUrl) {
+        if (navigator.share) {
+            navigator.share({
+                title: eventName,
+                url: eventUrl
+            }).then(() => {
+                console.log('Shared successfully.');
+            }).catch((error) => {
+                console.error('Error sharing:', error);
+            });
+        } else {
+            // Fallback for browsers that do not support Web Share API
+            alert('Web Share API is not supported in this browser. You can manually share the event.');
+        }
+    }
+</script>

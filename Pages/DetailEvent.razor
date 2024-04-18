@@ -77,11 +77,17 @@
                 <div class="col-md-12">
                     <div class="card-footer">
                         <p class="card-text">
-                            <a class="btn btn-outline-primary" asp-action="Index">
+                                <a class="btn btn-outline-secondary" @onclick="() => NavigateToEvents()">
                                 Back to List
-                            </a>
-                                <a class="btn btn-outline-success float-right">Edit</a>
-                                <a class="btn btn-outline-success float-right">Delete</a>
+                                </a>
+                                <button type="button" class="btn-sm">
+                                    <i class="fa fa-bookmark-o"></i>
+                                </button>
+                                <button type="button" class="btn-sm" onclick="shareEvent('@evnt.EventName', '@GetEventDetailsUrl(evnt.EventId)')">
+                                    <i class="fa fa-share-alt"></i>
+                                </button>
+                                <a class="btn btn-outline-primary float-right">Edit</a>
+                                <a class="btn btn-outline-danger float-right">Delete</a>
                         </p>
                     </div>
                 </div>
@@ -94,3 +100,20 @@ else
 {
     <p>Loading...</p>
 }
+<script>
+    function shareEvent(eventName, eventUrl) {
+        if (navigator.share) {
+            navigator.share({
+                title: eventName,
+                url: eventUrl
+            }).then(() => {
+                console.log('Shared successfully.');
+            }).catch((error) => {
+                console.error('Error sharing:', error);
+            });
+        } else {
+            // Fallback for browsers that do not support Web Share API
+            alert('Web Share API is not supported in this browser. You can manually share the event.');
+        }
+    }
+</script>

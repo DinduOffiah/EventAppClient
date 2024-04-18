@@ -81,11 +81,19 @@ namespace EventAppClient.Pages
 
             InvokeAsync(StateHasChanged);
         }
-
-
         public void Dispose()
         {
             timer?.Dispose();
+        }
+
+        protected string GetEventDetailsUrl(int eventId)
+        {
+            return $"/detailevent/{eventId}";
+        }
+
+        protected void NavigateToEvents()
+        {
+            NavigationManager.NavigateTo("/eventlist");
         }
     }
 }

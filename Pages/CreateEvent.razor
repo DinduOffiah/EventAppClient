@@ -27,12 +27,12 @@
         @if (Event.IsMultiDay)
         {
             <div class="form-group" style="width: 50%; margin-top:0.5cm">
-                <label for="startDate">Start Date: <span style="color: grey; font-style:italic">If no specific time, set time as 00:00</span></label>
+                <label for="startDate">Start Date:</label>
                 <InputDate Type="InputDateType.DateTimeLocal" id="startDate" class="form-control" @bind-Value="Event.StartDate" />
             </div>
 
             <div class="form-group" style="width: 50%">
-                <label for="endDate">End Date: <span style="color: grey; font-style:italic">If no specific time, set time as 00:00</span></label>
+                <label for="endDate">End Date:</label>
                 <InputDate Type="InputDateType.DateTimeLocal" id="endDate" class="form-control" @bind-Value="Event.EndDate" />
             </div>
         }
@@ -89,7 +89,7 @@
         }
 
         <div>
-            <button type="submit" class="btn btn-primary" style="margin-top: 0.5cm; margin-bottom: 0.5cm">Create</button>
+            <button type="submit" class="btn btn-outline-primary" style="margin-top: 0.5cm; margin-bottom: 0.5cm">Create</button>
         </div>
     </EditForm>
 

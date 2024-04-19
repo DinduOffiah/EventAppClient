@@ -5,6 +5,7 @@
 .top-row {
     height: 3.5rem;
     background-color: #0492C2; /*Cerulean*/
+    box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
 }
 
 .navbar-brand {
@@ -107,10 +108,11 @@
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
-    
+
     .nav-scrollable {
         /* Allow sidebar to scroll for tall menus */
         height: calc(100vh - 3.5rem);
         overflow-y: auto;
+        background-color: #1F456E; /*Aegean*/
     }
 }

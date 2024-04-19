@@ -27,7 +27,7 @@
                         {
                             @if (@evnt.EventTypeName == "Party")
                             {
-                                <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fturbofuture.com%2Finternet%2FParty-Quotes-and-Caption-Ideas&psig=AOvVaw0RYce7yKny3Sq2WzwhnBZC&ust=1713371074103000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKiThOSSx4UDFQAAAAAdAAAAABAE" alt="Party Event Image" width="100%" height="250px" />
+                                <img src="https://lh3.googleusercontent.com/proxy/UKjcRKYdVMc4LPeSukk_Iz2qxqPSFMP7qhIMd8eYH73DSAf3XSKc4k8MuBg0CyGWC56rcbsFUfWqKzUObYLkQWKHna4cC9kpBOiFSvwocNu-0ZCbWvqgVDIDd36z1UEJEAilZepAcV6fwp_1RUlR75bbLCtCgAKZ" alt="Party Event Image" width="100%" height="250px" />
                             }
                             else if (@evnt.EventTypeName == "Carnival")
                             {
@@ -39,7 +39,7 @@
                             }
                             else if (@evnt.EventTypeName == "Concert")
                             {
-                                <img src="https://media.istockphoto.com/id/1461816749/photo/a-crowd-of-people-with-raised-arms-during-a-music-concert-with-an-amazing-light-show-black.jpg?s=612x612&w=0&k=20&c=-hdWCLDP5AI9A3mjq3JPMPKhXxJ2P1iItPDFktQHxX8=" alt="Concert Event Image" width="100%" />
+                                <img src="https://media.istockphoto.com/id/1461816749/photo/a-crowd-of-people-with-raised-arms-during-a-music-concert-with-an-amazing-light-show-black.jpg?s=612x612&w=0&k=20&c=-hdWCLDP5AI9A3mjq3JPMPKhXxJ2P1iItPDFktQHxX8=" alt="Concert Event Image" width="100%" height="250px" />
                             }
                             else
                             {
@@ -75,24 +75,26 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="card-footer">
-                        <p class="card-text">
+                        <div class="card-footer">
+                            <p class="card-text d-flex justify-content-between">
                                 <a class="btn btn-outline-secondary" @onclick="() => NavigateToEvents()">
-                                Back to List
+                                    Back to List
                                 </a>
-                                <button type="button" class="btn btn-outline-success">
-                                    Buy Ticket
-                                </button>
-                                <button type="button" class="btn-sm" style="border-color:#a9a9a9">
-                                    <i class="fa fa-bookmark-o"></i>
-                                </button>
-                                <button type="button" class="btn-sm" style="border-color:#a9a9a9" onclick="shareEvent('@evnt.EventName', '@GetEventDetailsUrl(evnt.EventId)')">
-                                    <i class="fa fa-share-alt"></i>
-                                </button>
-                                <a class="btn btn-outline-primary float-right">Edit</a>
-                                <a class="btn btn-outline-danger float-right">Delete</a>
-                        </p>
-                    </div>
+                                <div>
+                                    <button type="button" class="btn btn-outline-success">
+                                        Buy Ticket
+                                    </button>
+                                    <button type="button" class="btn-sm" style="border-color:#a9a9a9">
+                                        <i class="fa fa-bookmark-o"></i>
+                                    </button>
+                                    <button type="button" class="btn-sm" style="border-color:#a9a9a9" onclick="shareEvent('@evnt.EventName', '@GetEventDetailsUrl(evnt.EventId)')">
+                                        <i class="fa fa-share-alt"></i>
+                                    </button>
+                                    <a class="btn btn-outline-primary">Edit</a>
+                                    <a class="btn btn-outline-danger">Delete</a>
+                                </div>
+                            </p>
+                        </div>
                 </div>
             </div>
         </div>

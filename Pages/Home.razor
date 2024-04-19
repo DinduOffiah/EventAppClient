@@ -2,6 +2,24 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
-
-Welcome to your new app.
+<nav class="navbar-2 navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color:lightgray">
+    <div class="container-fluid" style="text-align:center">
+        <div></div>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-center">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About" style="font-weight:700">See All Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Help" style="font-weight:700">Create Event</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact" style="font-weight:700">Live Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Settings" style="font-weight:700">Events Near Me</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

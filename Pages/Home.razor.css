@@ -1,0 +1,12 @@
+﻿.navbar-2 {
+    margin-left: 10%;
+    margin-right: 10%;
+    display: flex;
+    justify-content: center;
+}
+
+    .navbar-2 .navbar-nav {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }

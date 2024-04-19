@@ -19,11 +19,16 @@
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Settings" style="font-weight:700">Events Near Me <i class="fa fa-compass"></i></a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Settings" style="font-weight:700">Free Events <i class="fa fa-users"></i></a>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
-
+@{
+    //:Implement search feature
+}
 <div class="text-center">
     <form class="search-container">
         <div class="wrap">
@@ -32,6 +37,10 @@
                 <button type="submit" class="searchButton">
                     <i class="fa fa-search"></i>
                 </button>
+                <b>Country</b>
+                @{
+                    //:Implement the filter by country or location
+                }
             </div>
         </div>
     </form>

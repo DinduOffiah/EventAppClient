@@ -17,6 +17,7 @@ namespace EventAppClient.Pages
         protected Event evnt = new Event();
         protected string error;
         protected System.Timers.Timer timer;
+        protected bool isLoaded = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -39,6 +40,7 @@ namespace EventAppClient.Pages
                     evnt.Limit = response.Limit;
                     evnt.EventTypeName = response.EventTypeName;
                     evnt.TicketTypeName = response.TicketTypeName;
+                    isLoaded = true;
                 }
 
                 else

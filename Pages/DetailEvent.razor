@@ -80,13 +80,13 @@
                                 <a class="btn btn-outline-secondary" @onclick="() => NavigateToEvents()">
                                 Back to List
                                 </a>
-                                @{
-                                    //TODO: Fade button color for bookmark and share.
-                                }
-                                <button type="button" class="btn-sm">
+                                <button type="button" class="btn btn-outline-success">
+                                    Buy Ticket
+                                </button>
+                                <button type="button" class="btn-sm" style="border-color:#a9a9a9">
                                     <i class="fa fa-bookmark-o"></i>
                                 </button>
-                                <button type="button" class="btn-sm" onclick="shareEvent('@evnt.EventName', '@GetEventDetailsUrl(evnt.EventId)')">
+                                <button type="button" class="btn-sm" style="border-color:#a9a9a9" onclick="shareEvent('@evnt.EventName', '@GetEventDetailsUrl(evnt.EventId)')">
                                     <i class="fa fa-share-alt"></i>
                                 </button>
                                 <a class="btn btn-outline-primary float-right">Edit</a>

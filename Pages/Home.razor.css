@@ -71,3 +71,19 @@ b{
     margin-top:5px;
     margin-left:15px;
 }
+
+/*Carousel*/
+.section-container {
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    padding: 20px;
+    margin: 20px;
+}
+
+.carousel-card {
+    width: 60%;
+}
+
+.card-img-top {
+    height: 120%;
+}

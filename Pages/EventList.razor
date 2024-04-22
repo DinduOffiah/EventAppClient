@@ -69,10 +69,18 @@ else
 
                     <p class="card-location"><i class="fa fa-map-marker"></i> @evnt.Location</p>
                     <b><h5 class="card-name">@evnt.EventName</h5></b>
-                    @{
-                        //TODO: For multi-date make Event Date: startdate - enddate.
+                    @if (evnt.EventDate != null)
+                    {
+                        <h6 class="card-date mb-2 text-muted">@evnt.EventDate.Value.ToString("dd/MM/yyyy hh:mm tt")</h6>
                     }
-                    <h6 class="card-date mb-2 text-muted">@evnt.EventDate</h6>
+                    else if (evnt.StartDate != null && evnt.EndDate != null)
+                    {
+                    <h6 class="card-date mb-2 text-muted">@evnt.StartDate.Value.ToString("dd/MM/yyyy") - @evnt.EndDate.Value.ToString("dd/MM/yyyy")</h6>
+                    }
+                    else
+                    {
+                        <h6 class="card-date mb-2 text-muted"></h6>
+                    }
                     <div class="card-footer d-flex justify-content-between align-items-center">
                         <div class="buy-button">
                             @if (@evnt.TicketTypeName == "Paid")

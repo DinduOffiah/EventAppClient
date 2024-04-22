@@ -52,14 +52,14 @@
 <section class="section-container">
     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
-            @for (int i = 0; i < events.Count; i++)
+            @for (int i = 0; i < events.Count; i += 3)
             {
                 var evnt = events[i];
-                <div class="carousel-item @(i == 0 ? "active" : "")">
+                <div class="carousel-item @(i == 0 ? "active" : "")" data-interval="3000">
                     <div class="d-flex justify-content-around">
-                        @for (int j = 0; j < 3 && i < events.Count; j++, i++)
+                        @for (int j = 0; j < 3 && i + j < events.Count; j++)
                         {
-                            evnt = events[i];
+                            evnt = events[i + j];
                             <div class="card carousel-card">
                                 @if (@evnt.Image != null && @evnt.Image.Length > 0)
                                 {
@@ -108,3 +108,11 @@
         </a>
     </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.carousel').carousel();
+    });
+</script>

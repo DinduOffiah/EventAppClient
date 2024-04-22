@@ -84,6 +84,7 @@ b{
 
 .card {
     position: relative;
+    height: 300px;
 }
 
 .carousel-card {
@@ -104,3 +105,8 @@ b{
     background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
     color: white; /* Text color */
 }
+
+.card-title, .card-text {
+    text-align: center; /* This will center align the text */
+}
+

@@ -110,3 +110,11 @@ b{
     text-align: center; /* This will center align the text */
 }
 
+.ongoing, .upcoming{
+    text-align: center;
+    margin-top: 1cm;
+}
+
+.see-more{
+    text-align: center;
+}

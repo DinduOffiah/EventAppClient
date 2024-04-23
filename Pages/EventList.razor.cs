@@ -17,6 +17,8 @@ namespace EventAppClient.Pages
         public NavigationManager NavigationManager { get; set; }
 
         protected List<Event> events;
+        protected List<Event> ongoingEvents;
+        protected List<Event> upcomingEvents;
 
         protected override async Task OnInitializedAsync()
         {
@@ -24,6 +26,12 @@ namespace EventAppClient.Pages
             {
                 events = await Http.GetFromJsonAsync<List<Event>>("api/Events");
                 events = events.OrderByDescending(e => e.EventId).ToList();
+
+                // Get the current date
+                var currentDate = DateTime.Now;
+
+                // Filter the events into ongoing and upcoming
+                ongoingEvents = events.Where(e => e.StartDate <= currentDate).ToList();
             }
             catch (Exception ex)
             {

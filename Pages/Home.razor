@@ -116,7 +116,7 @@
 
 <div class="upcoming"><b>UPCOMING EVENTS</b></div>
 <section class="section-container">
-    @if (events == null)
+    @if (upcomingEvents == null)
     {
         <p style="text-align:center">Loading...</p>
     }
@@ -124,14 +124,14 @@
     {
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
-                @for (int i = 0; i < events.Count; i += 3)
+                @for (int i = 0; i < upcomingEvents.Count; i += 3)
                 {
-                    var evnt = events[i];
+                    var evnt = upcomingEvents[i];
                     <div class="carousel-item @(i == 0 ? "active" : "")" data-interval="3000">
                         <div class="d-flex justify-content-around">
-                            @for (int j = 0; j < 3 && i + j < events.Count; j++)
+                            @for (int j = 0; j < 3 && i + j < upcomingEvents.Count; j++)
                             {
-                                evnt = events[i + j];
+                                evnt = upcomingEvents[i + j];
                                 <div class="card carousel-card">
                                     @if (@evnt.Image != null && @evnt.Image.Length > 0)
                                     {

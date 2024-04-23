@@ -32,6 +32,7 @@ namespace EventAppClient.Pages
 
                 // Filter the events into ongoing and upcoming
                 ongoingEvents = events.Where(e => e.StartDate <= currentDate).ToList();
+                upcomingEvents = events.Where(e => e.StartDate > currentDate).ToList();
             }
             catch (Exception ex)
             {

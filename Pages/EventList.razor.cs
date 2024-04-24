@@ -31,8 +31,10 @@ namespace EventAppClient.Pages
                 var currentDate = DateTime.Now;
 
                 // Filter the events into ongoing and upcoming
-                ongoingEvents = events.Where(e => e.StartDate <= currentDate || e.EventDate <= currentDate).ToList();
-                upcomingEvents = events.Where(e => e.StartDate > currentDate || e.EventDate > currentDate).ToList();
+
+                // TODO: Fix this! Check for isOngoing property in model and what it does.
+                ongoingEvents = events.Where(e => (e.StartDate <= currentDate) || (e.EventDate <= currentDate)).ToList();
+                upcomingEvents = events.Where(e => (e.StartDate != null && e.StartDate > currentDate) || (e.EventDate != null && e.EventDate > currentDate)).ToList();
             }
             catch (Exception ex)
             {

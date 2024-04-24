@@ -1,0 +1,57 @@
+﻿.login-section {
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    margin-top: 10%;
+    margin-bottom: 10%;
+    margin-left: 30%;
+    margin-right: 30%;
+    border-radius: 8px;
+    background-color: #ededed;
+}
+
+h3 {
+    text-align: center;
+    margin-top: 1cm;
+}
+
+input {
+    border-radius: 6px;
+    width: 80%;
+    height: 40px;
+    border-style: none;
+}
+
+.username {
+    text-align: center;
+    margin-top: 2cm;
+}
+
+.password {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.confirm-password {
+    text-align: center;
+    padding-top: 10px;
+    margin-bottom: 2cm;
+}
+
+.login-button {
+    background-color: #1F456E;
+    width: 80%;
+    height: 36px;
+    border-radius: 16px;
+    font-family: 'Avenir Next', sans-serif;
+    font-weight: 300;
+    font-size: 20px;
+    color: #FFFFFF;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 1cm;
+}
+
+.button {
+    text-align: center;
+}

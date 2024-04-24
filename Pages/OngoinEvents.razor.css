@@ -1,0 +1,100 @@
+﻿body {
+}
+
+
+/*Search form*/
+.search-container {
+    margin-top: 5%;
+}
+
+.search {
+    width: 100%;
+    /*position: relative;*/
+    display: flex;
+}
+
+.searchTerm {
+    width: 100%;
+    border: 3px solid;
+    border-right: none;
+    padding: 5px;
+    height: 40px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: black;
+    border-color: #1F456E;
+}
+
+    .searchTerm:focus {
+        color: black;
+        border-color: #0492C2; /*Cerulean*/
+    }
+
+.searchButton {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #1F456E;
+    background: #1F456E; /*Aegean*/
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.search button i {
+    text-align: center;
+}
+
+.wrap {
+    width: 40%;
+    position: relative;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/*Event Card*/
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Adjust as needed */
+    margin: 20px auto; /* Add margin for spacing between rows */
+    max-width: 1200px; /* Adjust as needed */
+}
+
+.event-card {
+    width: 228px; /* Reduced width by 40% */
+    position: relative;
+    box-shadow: 0 2px 7px #dfdfdf;
+    margin: 30px auto; /* Reduced margin */
+    background: #fafafa;
+    margin-bottom: 5px; /* Add margin for spacing between columns */
+    flex: 0 0 calc(33.33% - 20px); /* Adjust column width as needed */
+    box-sizing: border-box;
+}
+
+.card-header, .card-image, .card-location, .card-name, .card-date, .card-footer {
+    min-height: 20px; /* Adjust the min-height as needed for each element */
+    /* This ensures that the space is reserved even if the content is missing */
+}
+
+.card-location, .card-name, .card-date {
+    margin-left: 10px;
+}
+
+/* Additional styles to ensure the button stays at the bottom */
+.card-footer {
+    margin-top: auto;
+}
+
+.other-buttons .btn-sm {
+    border: 2px solid transparent; /* Default state with transparent border */
+    /* Other styling properties */
+}
+
+    .other-buttons .btn-sm:hover {
+        border: 2px solid #a9a9a9; /* Change #0096EE to the color you want on hover */
+        /* Other styling properties for hover state */
+    }

@@ -12,6 +12,7 @@ namespace EventAppClient.Pages
     {
         [Inject] protected HttpClient Http { get; set; }
         [Inject] protected NavigationManager NavigationManager { get; set; }
+        [Inject] protected IJSRuntime JSRuntime { get; set; }
         [Parameter] public string Id { get; set; }
 
         protected Event evnt = new Event();
@@ -93,9 +94,9 @@ namespace EventAppClient.Pages
             return $"/detailevent/{eventId}";
         }
 
-        protected void NavigateToEvents()
+        protected void GoBack()
         {
-            NavigationManager.NavigateTo("/eventlist");
+            JSRuntime.InvokeVoidAsync("window.history.back");
         }
     }
 }

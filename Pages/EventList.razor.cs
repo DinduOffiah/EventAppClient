@@ -1,5 +1,6 @@
 ﻿using EventAppClient.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -16,9 +17,14 @@ namespace EventAppClient.Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+        [Inject] 
+        IJSRuntime JSRuntime { get; set; }
+
         protected List<Event> events;
         protected List<Event> ongoingEvents;
         protected List<Event> upcomingEvents;
+
+        private string stripePublishableKey = "pk_test_51PV94HP93VNiDzg2xmOIPLeGULmr7EYaniwNdBkiXo9OzU9lSwvXctv2d6W4SEGInEYGhJ3SVYq13uaDySIHBFSm00lJQHcTsv";
 
         protected override async Task OnInitializedAsync()
         {
@@ -33,12 +39,16 @@ namespace EventAppClient.Pages
                 // Filter the events into ongoing and upcoming
                 ongoingEvents = events.Where(e => (e.StartDate <= currentDate) || (e.EventDate <= currentDate)).ToList();
                 upcomingEvents = events.Where(e => (e.StartDate != null && e.StartDate > currentDate) || (e.EventDate != null && e.EventDate > currentDate)).ToList();
+
+                // Initialize Stripe (replace with your actual publishable key)
+                await JSRuntime.InvokeVoidAsync("initializeStripe", stripePublishableKey);
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred: {ex.Message}");
             }
         }
+
 
         protected void NavigateToCreateEvent()
         {

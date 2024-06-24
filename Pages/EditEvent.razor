@@ -74,6 +74,11 @@
             <InputNumber id="Limit" @bind-Value="evnt.Limit" class="form-control" />
         </div>
 
+        <div class="form-group" style="width: 50%; margin-top: 1cm">
+            <label for="TicketPrice">Price:</label>
+            <InputNumber id="TicketPrice" @bind-Value="evnt.TicketPrice" class="form-control" />
+        </div>
+
         <div class="form-group" style="width: 50%">
             <label for="image">Image: <span style="color: grey; font-style:italic">Optional</span></label>
             <InputFile id="image" class="form-control" OnChange="HandleFileUpload" />

@@ -66,6 +66,7 @@
                                     <b>Status: </b>
                                     <span class="badge bg-success text-white">@evnt.TicketTypeName</span>
                                 </p>
+                                <p class="card-text"><b>Price: $</b>@evnt.TicketPrice </p>
                                 <p class="card-text">
                                     <b>About Event </b>
                                     <hr />
@@ -93,7 +94,7 @@
                                         <button type="button" class="btn-sm" style="border-color:#a9a9a9" onclick="shareEvent('@evnt.EventName', '@GetEventDetailsUrl(evnt.EventId)')">
                                             <i class="fa fa-share-alt"></i>
                                         </button>
-                                        <a class="btn btn-outline-primary">Edit</a>
+                                        <a class="btn btn-outline-primary" @onclick="EditEvent">Edit</a>
                                         <a class="btn btn-outline-danger">Delete</a>
                                     </div>
                                 </p>

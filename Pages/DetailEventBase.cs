@@ -39,6 +39,7 @@ namespace EventAppClient.Pages
                     evnt.TicketTypeId = response.TicketTypeId;
                     evnt.EventTypeId = response.EventTypeId;
                     evnt.Limit = response.Limit;
+                    evnt.TicketPrice = response.TicketPrice;
                     evnt.EventTypeName = response.EventTypeName;
                     evnt.TicketTypeName = response.TicketTypeName;
                     isLoaded = true;
@@ -97,6 +98,11 @@ namespace EventAppClient.Pages
         protected void GoBack()
         {
             JSRuntime.InvokeVoidAsync("window.history.back");
+        }
+
+        protected void EditEvent()
+        {
+            NavigationManager.NavigateTo($"/updateevent/{evnt.EventId}");
         }
     }
 }

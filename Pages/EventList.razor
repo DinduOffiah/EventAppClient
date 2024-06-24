@@ -87,7 +87,8 @@ else
                             @if (@evnt.TicketTypeName == "Paid")
                             {
                                 <button type="button" class="btn btn-success btn-sm">
-                                    <i class="fa fa-credit-card"></i> Buy Ticket (@evnt.TicketPrice.ToString("C"))
+                                    <i class="fa fa-credit-card"></i> 
+                                    Buy Ticket (@(evnt.TicketPrice.HasValue ? evnt.TicketPrice.Value.ToString("C", System.Globalization.CultureInfo.CurrentCulture) : "Price N/A"))
                                 </button>
                             }
                         </div>

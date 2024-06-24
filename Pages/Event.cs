@@ -18,6 +18,7 @@
         public bool IsMultiDay { get; set; }
         public bool IsOngoing { get; set; }
         public string? Countdown { get; set; }
+        public decimal TicketPrice { get; set; }
 
     }
 }

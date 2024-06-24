@@ -80,6 +80,11 @@
         </div>
 
         <div class="form-group" style="width: 50%">
+            <label for="ticketprice">Price:</label>
+            <InputNumber id="ticketprice" class="form-control" @bind-Value="Event.TicketPrice" />
+        </div>
+
+        <div class="form-group" style="width: 50%">
             <label for="image">Image: <span style="color: grey; font-style:italic">Optional</span></label>
             <InputFile id="image" class="form-control" OnChange="HandleFileUpload" />
         </div>

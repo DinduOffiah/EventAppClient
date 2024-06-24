@@ -86,8 +86,8 @@ else
                         <div class="buy-button">
                             @if (@evnt.TicketTypeName == "Paid")
                             {
-                                <button type="submit" class="btn btn-success btn-sm">
-                                    <i class="fa fa-credit-card"></i> Buy Ticket
+                                <button type="button" class="btn btn-success btn-sm">
+                                    <i class="fa fa-credit-card"></i> Buy Ticket (@evnt.TicketPrice.ToString("C"))
                                 </button>
                             }
                         </div>

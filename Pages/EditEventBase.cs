@@ -49,6 +49,7 @@ namespace EventAppClient.Pages
                     evnt.TicketTypeId = response.TicketTypeId;
                     evnt.EventTypeId = response.EventTypeId;
                     evnt.Limit = response.Limit;
+                    evnt.TicketPrice = response.TicketPrice;
                     evnt.StartDate = response.StartDate;
                     evnt.EndDate = response.EndDate;
                     evnt.Description = response.Description;

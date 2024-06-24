@@ -11,9 +11,10 @@
         <p><strong>Event Name:</strong> @eventItem.EventName</p>
         <p><strong>Event Date:</strong> @eventItem.EventDate?.ToString("g")</p>
         <p><strong>Location:</strong> @eventItem.Location</p>
-        <p><strong>Ticket Type ID:</strong> @eventItem.TicketTypeId</p>
-        <p><strong>Event Type ID:</strong> @eventItem.EventTypeId</p>
+        <p><strong>Ticket Type:</strong> @eventItem.TicketTypeName</p>
+        <p><strong>Event Type:</strong> @eventItem.EventTypeName</p>
         <p><strong>Limit:</strong> @eventItem.Limit</p>
+        <p><strong>Price:</strong> $@eventItem.TicketPrice</p>
     </div>
 
     <button class="btn btn-danger" @onclick="ConfirmDelete">Delete</button>

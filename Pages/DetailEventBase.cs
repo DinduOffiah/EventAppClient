@@ -104,5 +104,10 @@ namespace EventAppClient.Pages
         {
             NavigationManager.NavigateTo($"/updateevent/{evnt.EventId}");
         }
+
+        protected void DeleteEvent()
+        {
+            NavigationManager.NavigateTo($"/deleteevent/{evnt.EventId}");
+        }
     }
 }

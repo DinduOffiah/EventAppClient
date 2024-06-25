@@ -42,7 +42,7 @@ namespace EventAppClient.Pages
                 ongoingEvents = events.Where(e => (e.StartDate <= currentDate) || (e.EventDate <= currentDate)).ToList();
                 upcomingEvents = events.Where(e => (e.StartDate != null && e.StartDate > currentDate) || (e.EventDate != null && e.EventDate > currentDate)).ToList();
 
-                // Initialize Stripe (replace with your actual secret key)
+                // Initialize Stripe 
                 await JSRuntime.InvokeVoidAsync("initializeStripe", stripeSecretKey);
             }
             catch (Exception ex)
@@ -88,11 +88,8 @@ namespace EventAppClient.Pages
 
         protected async Task BuyTicket(Event evnt)
         {
-            // Initialize Stripe with your secret key
             StripeConfiguration.ApiKey = "sk_test_51PV94HP93VNiDzg2VPX0gnU5JLEHtFcL24cNWSNiwhcox8uvW7kvBM4PigSlKwFXiWpkYME4zJzv57ZGqwDtPjNi00H6EhXxnY";
 
-
-            // Create a Stripe checkout session
             var options = new SessionCreateOptions
             {
                 PaymentMethodTypes = new List<string> { "card" },
@@ -103,23 +100,27 @@ namespace EventAppClient.Pages
                 PriceData = new SessionLineItemPriceDataOptions
                 {
                     Currency = "usd",
-                    UnitAmount = (long)(evnt.TicketPrice * 100), // Convert price to cents
-                    Product = evnt.EventName, // Use event name as the product
+                    UnitAmount = (long)(evnt.TicketPrice * 100),
+                    ProductData = new SessionLineItemPriceDataProductDataOptions
+                    {
+                        Name = evnt.EventName,
+                    },
                 },
                 Quantity = 1,
             },
         },
                 Mode = "payment",
-                SuccessUrl = "https://localhost:7087/paymentsuccessful",
-                CancelUrl = "https://localhost:7087/paymentcancelled",
+                SuccessUrl = NavigationManager.ToAbsoluteUri("/paymentsuccessful").ToString(),
+                CancelUrl = NavigationManager.ToAbsoluteUri("/paymentcancelled").ToString(),
             };
 
             var service = new SessionService();
             var session = await service.CreateAsync(options);
 
-            // Redirect the user to the Stripe-hosted checkout page
-            NavigationManager.NavigateTo(session.Url);
+            // Ensure the function exists before calling it
+            await JSRuntime.InvokeVoidAsync("eval", "if (typeof redirectToCheckout !== 'undefined') { redirectToCheckout('" + session.Id + "'); } else { console.error('redirectToCheckout is not defined'); }");
         }
+
 
 
     }

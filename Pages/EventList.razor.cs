@@ -1,6 +1,8 @@
 ﻿using EventAppClient.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using Stripe;
+using Stripe.Checkout;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
@@ -83,5 +85,41 @@ namespace EventAppClient.Pages
 
             events = events.OrderByDescending(e => e.EventId).ToList();
         }
+
+        private async Task BuyTicket(Event evnt)
+        {
+            // Initialize Stripe with your secret key
+            StripeConfiguration.ApiKey = "pk_test_51PV94HP93VNiDzg2xmOIPLeGULmr7EYaniwNdBkiXo9OzU9lSwvXctv2d6W4SEGInEYGhJ3SVYq13uaDySIHBFSm00lJQHcTsv";
+
+            // Create a Stripe checkout session
+            var options = new SessionCreateOptions
+            {
+                PaymentMethodTypes = new List<string> { "card" },
+                LineItems = new List<SessionLineItemOptions>
+        {
+            new SessionLineItemOptions
+            {
+                PriceData = new SessionLineItemPriceDataOptions
+                {
+                    Currency = "usd",
+                    UnitAmount = (long)(evnt.TicketPrice * 100), // Convert price to cents
+                    Product = evnt.EventName, // Use event name as the product
+                },
+                Quantity = 1,
+            },
+        },
+                Mode = "payment",
+                SuccessUrl = "https://yourapp.com/success",
+                CancelUrl = "https://yourapp.com/cancel",
+            };
+
+            var service = new SessionService();
+            var session = await service.CreateAsync(options);
+
+            // Redirect the user to the Stripe-hosted checkout page
+            NavigationManager.NavigateTo(session.Url);
+        }
+
+
     }
 }

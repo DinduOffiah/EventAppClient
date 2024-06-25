@@ -26,7 +26,7 @@ namespace EventAppClient.Pages
         protected List<Event> ongoingEvents;
         protected List<Event> upcomingEvents;
 
-        private string stripePublishableKey = "pk_test_51PV94HP93VNiDzg2xmOIPLeGULmr7EYaniwNdBkiXo9OzU9lSwvXctv2d6W4SEGInEYGhJ3SVYq13uaDySIHBFSm00lJQHcTsv";
+        private string stripeSecretKey = "sk_test_51PV94HP93VNiDzg2VPX0gnU5JLEHtFcL24cNWSNiwhcox8uvW7kvBM4PigSlKwFXiWpkYME4zJzv57ZGqwDtPjNi00H6EhXxnY";
 
         protected override async Task OnInitializedAsync()
         {
@@ -42,8 +42,8 @@ namespace EventAppClient.Pages
                 ongoingEvents = events.Where(e => (e.StartDate <= currentDate) || (e.EventDate <= currentDate)).ToList();
                 upcomingEvents = events.Where(e => (e.StartDate != null && e.StartDate > currentDate) || (e.EventDate != null && e.EventDate > currentDate)).ToList();
 
-                // Initialize Stripe (replace with your actual publishable key)
-                await JSRuntime.InvokeVoidAsync("initializeStripe", stripePublishableKey);
+                // Initialize Stripe (replace with your actual secret key)
+                await JSRuntime.InvokeVoidAsync("initializeStripe", stripeSecretKey);
             }
             catch (Exception ex)
             {
@@ -86,10 +86,11 @@ namespace EventAppClient.Pages
             events = events.OrderByDescending(e => e.EventId).ToList();
         }
 
-        private async Task BuyTicket(Event evnt)
+        protected async Task BuyTicket(Event evnt)
         {
             // Initialize Stripe with your secret key
-            StripeConfiguration.ApiKey = "pk_test_51PV94HP93VNiDzg2xmOIPLeGULmr7EYaniwNdBkiXo9OzU9lSwvXctv2d6W4SEGInEYGhJ3SVYq13uaDySIHBFSm00lJQHcTsv";
+            StripeConfiguration.ApiKey = "sk_test_51PV94HP93VNiDzg2VPX0gnU5JLEHtFcL24cNWSNiwhcox8uvW7kvBM4PigSlKwFXiWpkYME4zJzv57ZGqwDtPjNi00H6EhXxnY";
+
 
             // Create a Stripe checkout session
             var options = new SessionCreateOptions
@@ -109,8 +110,8 @@ namespace EventAppClient.Pages
             },
         },
                 Mode = "payment",
-                SuccessUrl = "https://yourapp.com/success",
-                CancelUrl = "https://yourapp.com/cancel",
+                SuccessUrl = "https://localhost:7087/paymentsuccessful",
+                CancelUrl = "https://localhost:7087/paymentcancelled",
             };
 
             var service = new SessionService();

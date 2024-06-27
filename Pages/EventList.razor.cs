@@ -1,12 +1,14 @@
-﻿using EventAppClient.Models;
+﻿using EventAppClient.Helpers;
+using EventAppClient.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using Newtonsoft.Json;
 using Stripe;
-using Stripe.Checkout;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
+using System.Linq;
 using System.Net.Http.Json;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace EventAppClient.Pages
@@ -19,31 +21,30 @@ namespace EventAppClient.Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-        [Inject] 
-        IJSRuntime JSRuntime { get; set; }
+        [Inject]
+        public IJSRuntime JsRuntime { get; set; }
 
         protected List<Event> events;
         protected List<Event> ongoingEvents;
         protected List<Event> upcomingEvents;
-
-        private string stripeSecretKey = "sk_test_51PV94HP93VNiDzg2VPX0gnU5JLEHtFcL24cNWSNiwhcox8uvW7kvBM4PigSlKwFXiWpkYME4zJzv57ZGqwDtPjNi00H6EhXxnY";
+        protected string searchTerm = "";
 
         protected override async Task OnInitializedAsync()
+        {
+            await LoadEvents();
+        }
+
+        private async Task LoadEvents()
         {
             try
             {
                 events = await Http.GetFromJsonAsync<List<Event>>("api/Events");
                 events = events.OrderByDescending(e => e.EventId).ToList();
 
-                // Get the current date
                 var currentDate = DateTime.Now;
 
-                // Filter the events into ongoing and upcoming
                 ongoingEvents = events.Where(e => (e.StartDate <= currentDate) || (e.EventDate <= currentDate)).ToList();
                 upcomingEvents = events.Where(e => (e.StartDate != null && e.StartDate > currentDate) || (e.EventDate != null && e.EventDate > currentDate)).ToList();
-
-                // Initialize Stripe 
-                await JSRuntime.InvokeVoidAsync("initializeStripe", stripeSecretKey);
             }
             catch (Exception ex)
             {
@@ -51,77 +52,40 @@ namespace EventAppClient.Pages
             }
         }
 
-
-        protected void NavigateToCreateEvent()
-        {
-            NavigationManager.NavigateTo("/createevent");
-        }
-
-        protected void NavigateToUpdateEvent(int id)
-        {
-            NavigationManager.NavigateTo($"/updateevent/{id}");
-        }
-
-        protected void NavigateToDeleteEvent(int id)
-        {
-            NavigationManager.NavigateTo($"/deleteevent/{id}");
-        }
-
-        protected void NavigateToDetailEvent(int id)
-        {
-            NavigationManager.NavigateTo($"/detailevent/{id}");
-        }
-
-        //This for link sharing
-        protected string GetEventDetailsUrl(int eventId)
-        {
-            return $"/detailevent/{eventId}";
-        }
-
-        protected string searchTerm = "";
         protected async Task SearchEvents()
         {
             events = await Http.GetFromJsonAsync<List<Event>>($"api/Events?query={searchTerm}");
-
             events = events.OrderByDescending(e => e.EventId).ToList();
         }
 
+        protected void NavigateToCreateEvent() => NavigationManager.NavigateTo("/createevent");
+
+        protected void NavigateToUpdateEvent(int id) => NavigationManager.NavigateTo($"/updateevent/{id}");
+
+        protected void NavigateToDeleteEvent(int id) => NavigationManager.NavigateTo($"/deleteevent/{id}");
+
+        protected void NavigateToDetailEvent(int id) => NavigationManager.NavigateTo($"/detailevent/{id}");
+
+        protected string GetEventDetailsUrl(int eventId) => $"/detailevent/{eventId}";
+
         protected async Task BuyTicket(Event evnt)
         {
-            StripeConfiguration.ApiKey = "sk_test_51PV94HP93VNiDzg2VPX0gnU5JLEHtFcL24cNWSNiwhcox8uvW7kvBM4PigSlKwFXiWpkYME4zJzv57ZGqwDtPjNi00H6EhXxnY";
-
-            var options = new SessionCreateOptions
+            try
             {
-                PaymentMethodTypes = new List<string> { "card" },
-                LineItems = new List<SessionLineItemOptions>
-        {
-            new SessionLineItemOptions
+                var response = await Http.PostAsync("/api/Payment/CreateCheckoutSession",
+                    new StringContent(JsonConvert.SerializeObject(evnt), Encoding.UTF8, "application/json"));
+                response.EnsureSuccessStatusCode();
+
+                var data = await response.Content.ReadAsStringAsync();
+                var sessionData = JsonConvert.DeserializeObject<Dictionary<string, string>>(data);
+                var sessionId = sessionData["sessionId"];
+
+                await JsInterop.RedirectToCheckout(JsRuntime, "pk_test_51PV94HP93VNiDzg2xmOIPLeGULmr7EYaniwNdBkiXo9OzU9lSwvXctv2d6W4SEGInEYGhJ3SVYq13uaDySIHBFSm00lJQHcTsv", sessionId);
+            }
+            catch (Exception ex)
             {
-                PriceData = new SessionLineItemPriceDataOptions
-                {
-                    Currency = "usd",
-                    UnitAmount = (long)(evnt.TicketPrice * 100),
-                    ProductData = new SessionLineItemPriceDataProductDataOptions
-                    {
-                        Name = evnt.EventName,
-                    },
-                },
-                Quantity = 1,
-            },
-        },
-                Mode = "payment",
-                SuccessUrl = NavigationManager.ToAbsoluteUri("/paymentsuccessful").ToString(),
-                CancelUrl = NavigationManager.ToAbsoluteUri("/paymentcancelled").ToString(),
-            };
-
-            var service = new SessionService();
-            var session = await service.CreateAsync(options);
-
-            // Ensure the function exists before calling it
-            await JSRuntime.InvokeVoidAsync("eval", "if (typeof redirectToCheckout !== 'undefined') { redirectToCheckout('" + session.Id + "'); } else { console.error('redirectToCheckout is not defined'); }");
+                Console.WriteLine($"Error creating checkout session: {ex.Message}");
+            }
         }
-
-
-
     }
 }

@@ -1,14 +1,22 @@
-﻿function initializeStripe(secretKey) {
-    console.log("Stripe is being initialized with key: ", secretKey);
-    var stripe = Stripe(secretKey);
+﻿function BuyTicket(event) {
+    // Get the event details (event.EventId, event.TicketPrice, etc.)
+    // Initialize Stripe.js with your publishable key
+    const stripe = Stripe('pk_test_51PV94HP93VNiDzg2xmOIPLeGULmr7EYaniwNdBkiXo9OzU9lSwvXctv2d6W4SEGInEYGhJ3SVYq13uaDySIHBFSm00lJQHcTsv');
 
-    window.redirectToCheckout = function (sessionId) {
-        console.log("Redirecting to checkout with session ID: ", sessionId);
-        stripe.redirectToCheckout({ sessionId: sessionId }).then(function (result) {
-            if (result.error) {
-                console.error(result.error.message);
-            }
+    // Create a Payment Intent on your server
+    fetch('/Payment/CreateCheckoutSession', {
+        method: 'POST',
+        body: JSON.stringify({ eventId: event.EventId }), // Send event ID to server
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Redirect to the Stripe checkout page
+            return stripe.redirectToCheckout({ sessionId: data.sessionId });
+        })
+        .catch(error => {
+            console.error('Error creating checkout session:', error);
         });
-    };
-    console.log("redirectToCheckout function has been defined");
 }

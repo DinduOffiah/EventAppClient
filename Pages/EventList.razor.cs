@@ -1,9 +1,9 @@
-﻿using EventAppClient.Helpers;
-using EventAppClient.Models;
+﻿using EventAppClient.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using Newtonsoft.Json;
 using Stripe;
+using Stripe.Checkout;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,9 +20,6 @@ namespace EventAppClient.Pages
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
-
-        [Inject]
-        public IJSRuntime JsRuntime { get; set; }
 
         protected List<Event> events;
         protected List<Event> ongoingEvents;
@@ -68,19 +65,19 @@ namespace EventAppClient.Pages
 
         protected string GetEventDetailsUrl(int eventId) => $"/detailevent/{eventId}";
 
+        protected void NavigateToPaymentSuccessful() => NavigationManager.NavigateTo("/paymentsuccessful");
+
+        protected void NavigateToPaymentCancelled() => NavigationManager.NavigateTo("/paymentcancelled");
+
         protected async Task BuyTicket(Event evnt)
         {
             try
             {
-                var response = await Http.PostAsync("/api/Payment/CreateCheckoutSession",
-                    new StringContent(JsonConvert.SerializeObject(evnt), Encoding.UTF8, "application/json"));
-                response.EnsureSuccessStatusCode();
+                var stripeService = new StripeService(); // Initialize StripeService
+                var session = await stripeService.CreateCheckoutSession(evnt);
 
-                var data = await response.Content.ReadAsStringAsync();
-                var sessionData = JsonConvert.DeserializeObject<Dictionary<string, string>>(data);
-                var sessionId = sessionData["sessionId"];
-
-                await JsInterop.RedirectToCheckout(JsRuntime, "pk_test_51PV94HP93VNiDzg2xmOIPLeGULmr7EYaniwNdBkiXo9OzU9lSwvXctv2d6W4SEGInEYGhJ3SVYq13uaDySIHBFSm00lJQHcTsv", sessionId);
+                // Redirect to Stripe Checkout
+                NavigationManager.NavigateTo(session.Url);
             }
             catch (Exception ex)
             {

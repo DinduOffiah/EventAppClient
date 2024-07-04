@@ -84,7 +84,7 @@
                                     <div>
                                         @if (@evnt.TicketTypeName == "Paid")
                                         {
-                                            <button type="button" class="btn btn-outline-success">
+                                            <button type="button" class="btn btn-outline-success" @onclick="() => BuyTicket(evnt)">
                                                 Buy Ticket
                                             </button>
                                         }

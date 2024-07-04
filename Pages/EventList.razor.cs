@@ -65,10 +65,6 @@ namespace EventAppClient.Pages
 
         protected string GetEventDetailsUrl(int eventId) => $"/detailevent/{eventId}";
 
-        protected void NavigateToPaymentSuccessful() => NavigationManager.NavigateTo("/paymentsuccessful");
-
-        protected void NavigateToPaymentCancelled() => NavigationManager.NavigateTo("/paymentcancelled");
-
         protected async Task BuyTicket(Event evnt)
         {
             try

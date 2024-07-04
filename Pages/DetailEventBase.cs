@@ -109,5 +109,21 @@ namespace EventAppClient.Pages
         {
             NavigationManager.NavigateTo($"/deleteevent/{evnt.EventId}");
         }
+
+        protected async Task BuyTicket(Event evnt)
+        {
+            try
+            {
+                var stripeService = new StripeService(); // Initialize StripeService
+                var session = await stripeService.CreateCheckoutSession(evnt);
+
+                // Redirect to Stripe Checkout
+                NavigationManager.NavigateTo(session.Url);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error creating checkout session: {ex.Message}");
+            }
+        }
     }
 }

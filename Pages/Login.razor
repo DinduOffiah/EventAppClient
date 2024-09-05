@@ -1,16 +1,28 @@
 ﻿@page "/login"
+@inherits LoginBase
 
 <section class="login-section">
     <h3>Login</h3>
-    <div class="form">
-        <div class="username">
-            <Input id="" placeholder="Username">
+    <EditForm Model="loginModel" OnValidSubmit="OnLogin">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form">
+            <div class="username">
+                <InputText @bind-Value="loginModel.Username" placeholder="Username" class="form-control" />
+                <ValidationMessage For="@(() => loginModel.Username)" />
+            </div>
+            <div class="password">
+                <InputText @bind-Value="loginModel.Password" type="password" placeholder="Password" class="form-control" />
+                <ValidationMessage For="@(() => loginModel.Password)" />
+            </div>
+            <div class="button">
+                <button type="submit" class="btn btn-lg login-button">Login</button>
+            </div>
         </div>
-        <div class="password">
-            <Input type="text" placeholder="Password">
-         </div>
-         <div class="button">
-            <button class="btn btn-lg login-button">Login</button>
-         </div>
-    </div>
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger">@errorMessage</div>
+        }
+    </EditForm>
 </section>
+

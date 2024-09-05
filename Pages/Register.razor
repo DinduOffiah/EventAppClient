@@ -1,19 +1,35 @@
 ﻿@page "/register"
+@inherits RegisterBase
 
 <section class="login-section">
     <h3>Register</h3>
-    <div class="form">
-        <div class="username">
-            <Input id="" placeholder="Username">
+    <EditForm Model="registerModel" OnValidSubmit="OnRegister">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="form">
+            <div class="username">
+                <InputText @bind-Value="registerModel.Username" placeholder="Username" class="form-control" />
+                <ValidationMessage For="@(() => registerModel.Username)" />
+            </div>
+            <div class="password">
+                <InputText @bind-Value="registerModel.Password" type="password" placeholder="Password" class="form-control" />
+                <ValidationMessage For="@(() => registerModel.Password)" />
+            </div>
+            <div class="confirm-password">
+                <InputText @bind-Value="registerModel.ConfirmPassword" type="password" placeholder="Confirm Password" class="form-control" />
+                <ValidationMessage For="@(() => registerModel.ConfirmPassword)" />
+            </div>
+            <div class="button">
+                <button type="submit" class="btn btn-lg login-button">Sign Up</button>
+            </div>
         </div>
-        <div class="password">
-            <Input type="text" placeholder="Password">
-         </div>
-         <div class="confirm-password">
-            <Input type="text" placeholder="Confirm Password">
-         </div>
-         <div class="button">
-            <button class="btn btn-lg login-button">Sign Up</button>
-         </div>
-    </div>
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger">@errorMessage</div>
+        }
+        @if (!string.IsNullOrEmpty(successMessage))
+        {
+            <div class="alert alert-success">@successMessage</div>
+        }
+    </EditForm>
 </section>

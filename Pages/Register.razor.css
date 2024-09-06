@@ -24,17 +24,23 @@ input {
 .username {
     text-align: center;
     margin-top: 2cm;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .password {
     text-align: center;
     padding-top: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .confirm-password {
     text-align: center;
     padding-top: 10px;
     margin-bottom: 2cm;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .login-button {

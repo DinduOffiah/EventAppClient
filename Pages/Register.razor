@@ -11,6 +11,10 @@
                 <InputText @bind-Value="registerModel.Username" placeholder="Username" class="form-control" />
                 <ValidationMessage For="@(() => registerModel.Username)" />
             </div>
+            <div class="email">
+                <InputText @bind-Value="registerModel.Email" placeholder="Email" class="form-control" />
+                <ValidationMessage For="@(() => registerModel.Email)" />
+            </div>
             <div class="password">
                 <InputText @bind-Value="registerModel.Password" type="password" placeholder="Password" class="form-control" />
                 <ValidationMessage For="@(() => registerModel.Password)" />

@@ -28,6 +28,13 @@ input {
     margin-right: 10%;
 }
 
+.email {
+    text-align: center;
+    margin-top: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
 .password {
     text-align: center;
     padding-top: 10px;

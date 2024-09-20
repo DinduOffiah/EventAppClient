@@ -8,8 +8,8 @@
         <ValidationSummary />
         <div class="form">
             <div class="username">
-                <InputText @bind-Value="loginModel.Username" placeholder="Username" class="form-control" />
-                <ValidationMessage For="@(() => loginModel.Username)" />
+                <InputText @bind-Value="loginModel.UsernameOrEmail " placeholder="Username or Email" class="form-control" />
+                <ValidationMessage For="@(() => loginModel.UsernameOrEmail)" />
             </div>
             <div class="password">
                 <InputText @bind-Value="loginModel.Password" type="password" placeholder="Password" class="form-control" />
@@ -25,4 +25,3 @@
         }
     </EditForm>
 </section>
-

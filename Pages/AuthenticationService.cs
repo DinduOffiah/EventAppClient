@@ -73,4 +73,17 @@ public class AuthenticationService
             throw new Exception(errorDescription);
         }
     }
+
+    public async Task<bool> ForgotPasswordAsync(string email)
+    {
+        var response = await _httpClient.PostAsJsonAsync("api/auth/forgot-password", new { Email = email });
+        return response.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> ResetPasswordAsync(ResetPasswordModel model)
+    {
+        var response = await _httpClient.PostAsJsonAsync("api/auth/reset-password", model);
+        return response.IsSuccessStatusCode;
+    }
+
 }

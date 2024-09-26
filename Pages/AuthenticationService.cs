@@ -3,6 +3,7 @@ using EventAppClient.Pages;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 public class AuthenticationService
@@ -48,5 +49,28 @@ public class AuthenticationService
     public async Task<string> GetTokenAsync()
     {
         return await _localStorage.GetItemAsync<string>(_tokenKey);
+    }
+
+    public async Task<bool> ChangePasswordAsync(ChangePasswordModel model)
+    {
+        var token = await _localStorage.GetItemAsync<string>(_tokenKey);
+        if (!string.IsNullOrEmpty(token))
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        }
+
+        var response = await _httpClient.PostAsJsonAsync("api/auth/change-password", model);
+
+        if (response.IsSuccessStatusCode)
+        {
+            return true;
+        }
+        else
+        {
+            var errorContent = await response.Content.ReadAsStringAsync();
+            var errorObject = JsonDocument.Parse(errorContent).RootElement;
+            var errorDescription = errorObject[0].GetProperty("description").GetString();
+            throw new Exception(errorDescription);
+        }
     }
 }

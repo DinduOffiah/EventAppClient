@@ -12,6 +12,7 @@ builder.Configuration.Bind("DetailedErrors", options => builder.HostEnvironment.
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7259/") });
 builder.Services.AddScoped<AuthenticationService>();
+builder.Services.AddSingleton<UserState>();
 
 builder.Services.AddBlazoredLocalStorage();
 

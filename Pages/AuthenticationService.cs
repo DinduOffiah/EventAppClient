@@ -1,5 +1,6 @@
 ﻿using Blazored.LocalStorage;
 using EventAppClient.Pages;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
@@ -11,11 +12,13 @@ public class AuthenticationService
     private readonly HttpClient _httpClient;
     private readonly ILocalStorageService _localStorage;
     private readonly string _tokenKey = "authToken";
+    private readonly UserState _userState;
 
-    public AuthenticationService(HttpClient httpClient, ILocalStorageService localStorage)
+    public AuthenticationService(HttpClient httpClient, ILocalStorageService localStorage, UserState userState)
     {
         _httpClient = httpClient;
         _localStorage = localStorage;
+        _userState = userState;
     }
 
     public async Task<bool> RegisterAsync(RegisterModel registerModel)
@@ -32,6 +35,9 @@ public class AuthenticationService
             var token = await response.Content.ReadAsStringAsync();
             await _localStorage.SetItemAsync(_tokenKey, token);
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+            _userState.Username = loginModel.UsernameOrEmail;
+
             return token;
         }
         else
@@ -44,6 +50,8 @@ public class AuthenticationService
     {
         await _localStorage.RemoveItemAsync(_tokenKey);
         _httpClient.DefaultRequestHeaders.Authorization = null;
+
+        _userState.Username = null;
     }
 
     public async Task<string> GetTokenAsync()
@@ -86,4 +94,23 @@ public class AuthenticationService
         return response.IsSuccessStatusCode;
     }
 
+    public async Task<string> GetUsernameAsync()
+    {
+        var token = await _localStorage.GetItemAsync<string>(_tokenKey);
+        if (string.IsNullOrEmpty(token))
+        {
+            return null; 
+        }
+
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(token);
+
+        var usernameClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub);
+        return usernameClaim?.Value;
+    }
+
+    public void SetAuthorizationHeader(string token)
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    }
 }

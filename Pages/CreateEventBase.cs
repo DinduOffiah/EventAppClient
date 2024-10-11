@@ -14,6 +14,9 @@ namespace EventAppClient.Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+        [Inject]
+        public AuthenticationService AuthenticationService { get; set; }
+
         protected Event Event { get; set; } = new Event();
         protected string ErrorMessage { get; set; }
 
@@ -67,6 +70,14 @@ namespace EventAppClient.Pages
 
             try
             {
+                var token = await AuthenticationService.GetTokenAsync();
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    // If not authenticated, redirect to login page
+                    NavigationManager.NavigateTo("/login");
+                    return;
+                }
                 // Fetch data from API endpoints
                 EventTypes = await Http.GetFromJsonAsync<List<EventType>>("api/EventType");
                 TicketTypes = await Http.GetFromJsonAsync<List<TicketType>>("api/TicketType");

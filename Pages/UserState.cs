@@ -4,6 +4,7 @@
     {
         public event Action OnChange;
         private string _username;
+        private string _role;
 
         public string Username
         {
@@ -11,6 +12,16 @@
             set
             {
                 _username = value;
+                NotifyStateChanged();
+            }
+        }
+
+        public string Role
+        {
+            get => _role;
+            set
+            {
+                _role = value;
                 NotifyStateChanged();
             }
         }

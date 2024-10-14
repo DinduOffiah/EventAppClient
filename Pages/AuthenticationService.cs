@@ -113,4 +113,21 @@ public class AuthenticationService
     {
         _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
     }
+
+    public async Task<(string Username, string Role)> GetUserDetailsAsync()
+    {
+        var token = await _localStorage.GetItemAsync<string>(_tokenKey);
+        if (string.IsNullOrEmpty(token))
+        {
+            return (null, null);
+        }
+
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(token);
+        var usernameClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub);
+        var roleClaim = jwtToken.Claims.FirstOrDefault(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+
+        return (usernameClaim?.Value, roleClaim?.Value);
+    }
+
 }

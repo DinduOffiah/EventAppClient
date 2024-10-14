@@ -78,6 +78,7 @@ namespace EventAppClient.Pages
                     NavigationManager.NavigateTo("/login");
                     return;
                 }
+
                 // Fetch data from API endpoints
                 EventTypes = await Http.GetFromJsonAsync<List<EventType>>("api/EventType");
                 TicketTypes = await Http.GetFromJsonAsync<List<TicketType>>("api/TicketType");

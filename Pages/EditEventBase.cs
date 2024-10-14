@@ -12,6 +12,7 @@ namespace EventAppClient.Pages
     {
         [Inject] protected HttpClient Http { get; set; }
         [Inject] protected NavigationManager NavigationManager { get; set; }
+        [Inject] protected AuthenticationService AuthenticationService { get; set; } 
         [Parameter] public string Id { get; set; }
 
         protected Event evnt = new Event();
@@ -22,6 +23,15 @@ namespace EventAppClient.Pages
         {
             try
             {
+                var token = await AuthenticationService.GetTokenAsync();
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    // If not authenticated, redirect to login page
+                    NavigationManager.NavigateTo("/login");
+                    return;
+                }
+
                 // Fetch data from API endpoints
                 EventTypes = await Http.GetFromJsonAsync<List<EventType>>("api/EventType");
                 TicketTypes = await Http.GetFromJsonAsync<List<TicketType>>("api/TicketType");

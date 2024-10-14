@@ -11,6 +11,7 @@ namespace EventAppClient.Pages
     {
         [Inject] protected HttpClient Http { get; set; }
         [Inject] protected NavigationManager NavigationManager { get; set; }
+        [Inject] protected AuthenticationService AuthenticationService { get; set; }
         [Parameter] public string Id { get; set; }
 
         protected Event eventItem;
@@ -20,6 +21,15 @@ namespace EventAppClient.Pages
         {
             try
             {
+                var token = await AuthenticationService.GetTokenAsync();
+
+                if (string.IsNullOrEmpty(token))
+                {
+                    // If not authenticated, redirect to login page
+                    NavigationManager.NavigateTo("/login");
+                    return;
+                }
+
                 var response = await Http.GetFromJsonAsync<Event>($"api/Events/{Id}");
 
                 if (response != null)

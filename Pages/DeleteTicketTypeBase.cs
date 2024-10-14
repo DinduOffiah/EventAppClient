@@ -11,6 +11,7 @@ namespace EventAppClient.Pages
     {
         [Inject] protected HttpClient Http { get; set; }
         [Inject] protected NavigationManager NavigationManager { get; set; }
+        [Inject] protected AuthenticationService AuthenticationService { get; set; }
         [Parameter] public string Id { get; set; }
 
         protected TicketType ticketType;
@@ -20,6 +21,22 @@ namespace EventAppClient.Pages
         {
             try
             {
+                var token = await AuthenticationService.GetTokenAsync();
+                if (string.IsNullOrEmpty(token))
+                {
+                    // If not authenticated, redirect to login page
+                    NavigationManager.NavigateTo("/login");
+                    return;
+                }
+
+                var userDetails = await AuthenticationService.GetUserDetailsAsync();
+                if (userDetails.Role != "Admin")
+                {
+                    // If not an admin, redirect to access denied page
+                    NavigationManager.NavigateTo("/accessdenied");
+                    return;
+                }
+
                 var response = await Http.GetFromJsonAsync<TicketType>($"api/TicketType/{Id}");
 
                 if (response != null)

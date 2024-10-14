@@ -11,7 +11,9 @@ namespace EventAppClient.Pages
     public class UpdateEventTypeBase : ComponentBase
     {
         [Inject] protected HttpClient Http { get; set; }
-        [Inject] protected NavigationManager NavigationManager { get; set; } // Inject NavigationManager
+        [Inject] protected NavigationManager NavigationManager { get; set; }
+        [Inject] protected AuthenticationService AuthenticationService { get; set; }
+
         [Parameter] public string Id { get; set; }
 
         protected EventType eventType = new EventType();
@@ -20,6 +22,22 @@ namespace EventAppClient.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            var token = await AuthenticationService.GetTokenAsync();
+            if (string.IsNullOrEmpty(token))
+            {
+                // If not authenticated, redirect to login page
+                NavigationManager.NavigateTo("/login");
+                return;
+            }
+
+            var userDetails = await AuthenticationService.GetUserDetailsAsync();
+            if (userDetails.Role != "Admin")
+            {
+                // If not an admin, redirect to access denied page
+                NavigationManager.NavigateTo("/accessdenied");
+                return;
+            }
+
             var response = await Http.GetFromJsonAsync<EventType>($"api/EventType/{Id}");
 
             if (response != null)

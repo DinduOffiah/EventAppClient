@@ -42,6 +42,14 @@ namespace EventAppClient.Pages
 
                 ongoingEvents = events.Where(e => (e.StartDate <= currentDate) || (e.EventDate <= currentDate)).ToList();
                 upcomingEvents = events.Where(e => (e.StartDate != null && e.StartDate > currentDate) || (e.EventDate != null && e.EventDate > currentDate)).ToList();
+
+                foreach (var evnt in events)
+                {
+                    if (evnt.Limit.HasValue && evnt.Limit.Value <= 0)
+                    {
+                        evnt.TicketTypeName = "Sold Out";
+                    }
+                }
             }
             catch (Exception ex)
             {

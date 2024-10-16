@@ -1,10 +1,12 @@
-﻿@page "/settings"
+﻿@inject AuthenticationService AuthenticationService
+@inject NavigationManager NavigationManager
+@page "/settings"
 
 <h3>Settings</h3>
 <div class="settings-items">
     <ul>
         <li>
-            <a>Change Password</a>
+            <a href="/change-password">Change Password</a>
         </li>
         <li>
             <a>Provide Bank Info</a>
@@ -13,13 +15,16 @@
             <a>Change Language</a>
         </li>
     </ul>
+    <button @onclick="Logout">Logout</button>
 </div>
-<hr />
-<br />
-<h4>Need Help?</h4>
-<div>
-    <p>FAQ</p>
-</div>
-<hr />
-<br />
-<h4>Contact</h4>
+
+@code{
+    private async Task Logout()
+    {
+        // Call the logout method in the service
+        await AuthenticationService.LogoutAsync();
+        // Redirect to login page
+        NavigationManager.NavigateTo("/login");
+    }
+}
+

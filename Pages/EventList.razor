@@ -99,8 +99,12 @@ else
                             <button type="button" class="btn-sm" @onclick="() => NavigateToDetailEvent(evnt.EventId)">
                                 <i class="fa fa-info-circle"></i>
                             </button>
-                            <button type="button" class="btn-sm">
-                                <i class="fa fa-bookmark-o"></i>
+                            <button type="button"
+                                    class="btn btn-sm"
+                                    style="border-color:#a9a9a9; color:@(evnt.IsSaved ? "green" : "black")"
+                                    @onclick="() => ToggleSaveEvent(evnt)">
+                                <i class="fa @(evnt.IsSaved ? "fa-bookmark" : "fa-bookmark-o")"></i>
+                                @(evnt.IsSaved ? "Unsave" : "Save")
                             </button>
                             <button type="button" class="btn-sm" onclick="shareEvent('@evnt.EventName', '@GetEventDetailsUrl(evnt.EventId)')">
                                 <i class="fa fa-share-alt"></i>
@@ -116,6 +120,45 @@ else
         <p><em>No event found.</em></p>
     }
 }
+
+@code {
+    private List<Event> savedEvents;
+
+    private async Task ToggleSaveEvent(Event evnt)
+    {
+        try
+        {
+            if (evnt.IsSaved)
+            {
+                // Call the API to unsave the event
+                var response = await Http.DeleteAsync($"api/SavedEvent/remove-saved-event?eventId={evnt.EventId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    evnt.IsSaved = false; // Update UI
+                }
+            }
+            else
+            {
+                // Call the API to save the event
+                var response = await Http.PostAsJsonAsync("api/SavedEvent/save-event", evnt.EventId);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    evnt.IsSaved = true; // Update UI
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error while saving/removing event: {ex.Message}");
+        }
+    }
+
+}
+
+
+
 <script>
     function shareEvent(eventName, eventUrl) {
         if (navigator.share) {

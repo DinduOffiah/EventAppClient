@@ -88,5 +88,52 @@ namespace EventAppClient.Pages
                 Console.WriteLine($"Error creating checkout session: {ex.Message}");
             }
         }
+
+        protected List<int> savedEventIds = new();
+
+
+        protected async Task ToggleSaveEvent(Event evnt)
+        {
+            if (IsEventSaved(evnt.EventId))
+            {
+                await UnsaveEvent(evnt.EventId);
+            }
+            else
+            {
+                await SaveEvent(evnt.EventId);
+            }
+        }
+
+        protected async Task SaveEvent(int eventId)
+        {
+            try
+            {
+                await Http.PostAsJsonAsync("api/Events/save-event", eventId);
+                savedEventIds.Add(eventId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error saving event: {ex.Message}");
+            }
+        }
+
+        protected async Task UnsaveEvent(int eventId)
+        {
+            try
+            {
+                await Http.DeleteAsync($"api/Events/unsave-event/{eventId}");
+                savedEventIds.Remove(eventId);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error unsaving event: {ex.Message}");
+            }
+        }
+
+        protected bool IsEventSaved(int eventId)
+        {
+            return savedEventIds.Contains(eventId);
+        }
+
     }
 }

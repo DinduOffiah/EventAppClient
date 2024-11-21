@@ -1,0 +1,180 @@
+﻿@page "/saved-events"
+@inherits EventList
+
+<h3>Saved Events</h3>
+
+@if (savedEvents == null)
+{
+    <p>Loading...</p>
+}
+else if (!savedEvents.Any())
+{
+    <p>No saved events found.</p>
+}
+else
+{
+    <div class="d-flex justify-content-center card-container">
+        @foreach (var evnt in savedEvents)
+        {
+            <div class="event-card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="event-type">@evnt.EventTypeName</h5>
+                    @if (evnt.Limit.HasValue && evnt.Limit.Value <= 0)
+                    {
+                        <span class="badge bg-dangert  text-white">Sold Out</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success text-white">@evnt.TicketTypeName</span>
+                    }
+                </div>
+                <div class="card-image">
+                    @if (@evnt.Image != null && @evnt.Image.Length > 0)
+                    {
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(@evnt.Image)" alt="Event Image" style="width: 370px; height: 200px;" />
+                    }
+                    else
+                    {
+                        if (@evnt.EventTypeName == "Party")
+                        {
+                            <img src="https://cdn.standardmedia.co.ke/images/wysiwyg/images/U0JnDrS9emx3oW80GaDhBfccX2gvuUpXR8pqbM9l.jpg" alt="Party Event Image" style="width: 370px; height: 200px;" />
+                        }
+                        else if (@evnt.EventTypeName == "Carnival")
+                        {
+                            <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.alimentarium.org%2Fen%2Fstory%2Fcarnival&psig=AOvVaw1zV8HF5eFFsiJPRk986Zrl&ust=1713371086330000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCIDyu-mSx4UDFQAAAAAdAAAAABAF" alt="Carnival Event Image" style="width: 370px; height: 200px;" />
+                        }
+                        else if (@evnt.EventTypeName == "Picnic")
+                        {
+                            <img src="https://images-cdn.welcomesoftware.com/Zz0yYzk1ZDRmNmI2NGMxMWViOGRiNDk1MTgxY2IxYmM0Yw==/Zz1iZWJjZWViNWVhOWJiYzIyYzVlOTI1NTExOGQxMGFjYQ%3D%3D.jpg?width=1366" alt="Picnic Event Image" style="width: 370px; height: 200px;" />
+                        }
+                        else if (@evnt.EventTypeName == "Concert")
+                        {
+                            <img src="https://media.istockphoto.com/id/1461816749/photo/a-crowd-of-people-with-raised-arms-during-a-music-concert-with-an-amazing-light-show-black.jpg?s=612x612&w=0&k=20&c=-hdWCLDP5AI9A3mjq3JPMPKhXxJ2P1iItPDFktQHxX8=" alt="Concert Event Image" style="width: 370px; height: 200px;" />
+                        }
+                        else
+                        {
+                            <img src="https://www.aal-europe.eu/wp-content/uploads/2013/04/events_medium.jpg" alt="Default Event Image" style="width: 370px; height: 200px;" />
+                        }
+                    }
+                </div>
+
+                <p class="card-location"><i class="fa fa-map-marker"></i> @evnt.Location</p>
+                <b><h5 class="card-name">@evnt.EventName</h5></b>
+                @if (evnt.EventDate != null)
+                {
+                    <h6 class="card-date mb-2 text-muted">@evnt.EventDate.Value.ToString("dd/MM/yyyy hh:mm tt")</h6>
+                }
+                else if (evnt.StartDate != null && evnt.EndDate != null)
+                {
+                    <h6 class="card-date mb-2 text-muted">@evnt.StartDate.Value.ToString("dd/MM/yyyy") - @evnt.EndDate.Value.ToString("dd/MM/yyyy")</h6>
+                }
+                else
+                {
+                    <h6 class="card-date mb-2 text-muted"></h6>
+                }
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <div class="buy-button">
+                        @if (@evnt.TicketTypeName == "Paid")
+                        {
+                            <button type="button" class="btn btn-success btn-sm" @onclick="() => BuyTicket(evnt)">
+                                <i class="fa fa-credit-card"></i>
+                                Buy Ticket (@(evnt.TicketPrice.HasValue ? evnt.TicketPrice.Value.ToString("C", System.Globalization.CultureInfo.CurrentCulture) : "Price N/A"))
+                            </button>
+                        }
+                    </div>
+                    <div class="other-buttons">
+                        <button type="button" class="btn-sm" @onclick="() => NavigateToDetailEvent(evnt.EventId)">
+                            <i class="fa fa-info-circle"></i>
+                        </button>
+                        @* <button type="button"
+                                class="btn btn-sm"
+                                style="border-color:#a9a9a9; color:@(evnt.IsSaved ? "green" : "black")"
+                                @onclick="() => ToggleSaveEvent(evnt)">
+                            <i class="fa @(evnt.IsSaved ? "fa-bookmark" : "fa-bookmark-o")"></i>
+                            @(evnt.IsSaved ? "Unsave" : "Save")
+                        </button> *@
+                        <button type="button" class="btn btn-sm" style="border-color:#a9a9a9; color:green;" @onclick="() => UnsaveEvent(evnt)">
+                            <i class="fa fa-bookmark"></i>
+                            Remove
+                        </button>
+                        <button type="button" class="btn-sm" onclick="shareEvent('@evnt.EventName', '@GetEventDetailsUrl(evnt.EventId)')">
+                            <i class="fa fa-share-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<Event> savedEvents;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSavedEvents();
+    }
+
+    private async Task LoadSavedEvents()
+    {
+        try
+        {
+            savedEvents = await Http.GetFromJsonAsync<List<Event>>("api/SavedEvent/user-saved-events");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading saved events: {ex.Message}");
+        }
+    }
+
+
+    // private async Task ToggleSaveEvent(Event evnt)
+    // {
+    //     try
+    //     {
+    //         if (evnt.IsSaved)
+    //         {
+    //             // Call the API to unsave the event
+    //             var response = await Http.DeleteAsync($"api/SavedEvent/remove-saved-event?eventId={evnt.EventId}");
+
+    //             if (response.IsSuccessStatusCode)
+    //             {
+    //                 evnt.IsSaved = false; // Update UI
+    //             }
+    //         }
+    //         else
+    //         {
+    //             // Call the API to save the event
+    //             var response = await Http.PostAsJsonAsync("api/SavedEvent/save-event", evnt.EventId);
+
+    //             if (response.IsSuccessStatusCode)
+    //             {
+    //                 evnt.IsSaved = true; // Update UI
+    //             }
+    //         }
+    //     }
+    //     catch (Exception ex)
+    //     {
+    //         Console.WriteLine($"Error while saving/removing event: {ex.Message}");
+    //     }
+    // }
+
+    private async Task UnsaveEvent(Event evnt)
+    {
+        try
+        {
+            var response = await Http.DeleteAsync($"api/SavedEvent/remove-saved-event?eventId={evnt.EventId}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                savedEvents.Remove(evnt); // Update UI
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error while removing saved event: {ex.Message}");
+        }
+    }
+
+
+}

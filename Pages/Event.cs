@@ -20,6 +20,7 @@
         public string? Countdown { get; set; }
         public decimal? TicketPrice { get; set; }
         public string? CreatedBy { get; set; }
+        public bool IsSaved { get; set; }
 
     }
 }

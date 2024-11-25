@@ -1,9 +1,20 @@
 ﻿h3 {
     text-align:center;
-    text-decoration:underline;
     margin-top:1cm;
 }
 
 .settings-items{
     text-align:center;
+    margin-top:0.5cm;
+    font-size:large;
 }
+
+.settings-items ul {
+   list-style-type: none;
+}
+
+ button{
+     margin-top:0.5cm;
+ }
+
+

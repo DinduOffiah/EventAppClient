@@ -1,4 +1,4 @@
-﻿using Blazored.LocalStorage;
+using Blazored.LocalStorage;
 using EventAppClient.Pages;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
@@ -27,18 +27,18 @@ public class AuthenticationService
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<string> LoginAsync(LoginModel loginModel)
+    public async Task<string> LoginAsync(LoginModel loginModel, string returnUrl = null)
     {
-        var response = await _httpClient.PostAsJsonAsync("api/auth/login", loginModel);
+        var response = await _httpClient.PostAsJsonAsync($"api/auth/login?returnUrl={returnUrl}", loginModel);
         if (response.IsSuccessStatusCode)
         {
-            var token = await response.Content.ReadAsStringAsync();
-            await _localStorage.SetItemAsync(_tokenKey, token);
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var content = await response.Content.ReadFromJsonAsync<LoginResponseModel>();
+            await _localStorage.SetItemAsync(_tokenKey, content.Token);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", content.Token);
 
             _userState.Username = loginModel.UsernameOrEmail;
 
-            return token;
+            return content.ReturnUrl ?? "/"; // Fallback to homepage if ReturnUrl is null
         }
         else
         {
@@ -99,7 +99,7 @@ public class AuthenticationService
         var token = await _localStorage.GetItemAsync<string>(_tokenKey);
         if (string.IsNullOrEmpty(token))
         {
-            return null; 
+            return null;
         }
 
         var handler = new JwtSecurityTokenHandler();

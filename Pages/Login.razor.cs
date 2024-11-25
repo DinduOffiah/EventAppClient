@@ -6,6 +6,7 @@ namespace EventAppClient.Pages
     {
         protected LoginModel loginModel = new LoginModel();
         protected string errorMessage;
+        private string returnUrl;
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -13,17 +14,28 @@ namespace EventAppClient.Pages
         [Inject]
         public AuthenticationService AuthenticationService { get; set; }
 
+        protected override void OnInitialized()
+        {
+            // Extract the returnUrl from the query string
+            var uri = new Uri(NavigationManager.Uri);
+            var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
+            if (query.TryGetValue("returnUrl", out var extractedReturnUrl))
+            {
+                returnUrl = extractedReturnUrl;
+            }
+        }
+
         protected async Task OnLogin()
         {
             try
             {
                 var token = await AuthenticationService.LoginAsync(loginModel);
-                // Handle successful login
-                NavigationManager.NavigateTo("/"); // Redirect to homepage or dashboard
+
+                // Redirect to the ReturnUrl if available; otherwise, redirect to homepage
+                NavigationManager.NavigateTo(string.IsNullOrEmpty(returnUrl) ? "/" : returnUrl);
             }
             catch (Exception ex)
             {
-                // Handle login errors
                 errorMessage = "Login failed: Invalid username or password.";
                 Console.WriteLine($"Login failed: {ex.Message}");
             }

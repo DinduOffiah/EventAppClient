@@ -21,8 +21,12 @@ namespace EventAppClient.Pages
             var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
             if (query.TryGetValue("returnUrl", out var extractedReturnUrl))
             {
-                returnUrl = extractedReturnUrl;
+                if (Uri.IsWellFormedUriString(extractedReturnUrl, UriKind.Relative))
+                {
+                    returnUrl = extractedReturnUrl;
+                }
             }
+
         }
 
         protected async Task OnLogin()
@@ -32,7 +36,15 @@ namespace EventAppClient.Pages
                 var token = await AuthenticationService.LoginAsync(loginModel);
 
                 // Redirect to the ReturnUrl if available; otherwise, redirect to homepage
-                NavigationManager.NavigateTo(string.IsNullOrEmpty(returnUrl) ? "/" : returnUrl);
+                if (!string.IsNullOrEmpty(returnUrl) && Uri.IsWellFormedUriString(returnUrl, UriKind.Relative))
+                {
+                    NavigationManager.NavigateTo(returnUrl);
+                }
+                else
+                {
+                    NavigationManager.NavigateTo("/");
+                }
+
             }
             catch (Exception ex)
             {

@@ -38,7 +38,11 @@ public class AuthenticationService
 
             _userState.Username = loginModel.UsernameOrEmail;
 
-            return content.ReturnUrl ?? "/"; // Fallback to homepage if ReturnUrl is null
+            if (!string.IsNullOrEmpty(content.ReturnUrl) && Uri.IsWellFormedUriString(content.ReturnUrl, UriKind.Relative))
+            {
+                return content.ReturnUrl;
+            }
+            return "/";
         }
         else
         {

@@ -32,7 +32,7 @@ namespace EventAppClient.Pages
             else
             {
                 // Handle registration failure
-                errorMessage = "Registration failed: Username may already be taken.";
+                errorMessage = "Registration failed: Username or Email may already be taken.";
             }
         }
     }

@@ -104,6 +104,10 @@
     color: white;
 }
 
+.nav-scrollable {
+    background-color: #1F456E; /*Aegean*/
+}
+
 @media (min-width: 641px) {
     .navbar-toggler {
         display: none;

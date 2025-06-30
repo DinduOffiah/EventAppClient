@@ -118,3 +118,9 @@ b{
 .see-more{
     text-align: center;
 }
+
+@media (max-width: 768px) {
+    .text-center {
+        margin-top:3rem;
+    }
+}

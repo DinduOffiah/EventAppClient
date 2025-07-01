@@ -121,6 +121,11 @@ b{
 
 @media (max-width: 768px) {
     .text-center {
-        margin-top:3rem;
+        margin-top: 3rem;
+    }
+
+    .search {
+        width: 200%;
+        margin-left: -1.7cm;
     }
 }

@@ -17,4 +17,13 @@
      margin-top:0.5cm;
  }
 
-
+.login-section {
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+    margin-top: 10%;
+    margin-bottom: 10%;
+    margin-left: 30%;
+    margin-right: 30%;
+    border-radius: 8px;
+    background-color: #ededed;
+}

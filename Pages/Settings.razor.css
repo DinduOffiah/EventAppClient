@@ -13,6 +13,7 @@ h5 {
     text-align:center;
     margin-top:0.5cm;
     font-size:large;
+    align-items:center;
 }
 
 .settings-items ul {
@@ -28,14 +29,14 @@ h5 {
     box-shadow: 0 0 10px rgba(0,0,0,0.15);
     margin-top: 4%;
     margin-bottom: 10%;
-    margin-left: 30%;
-    margin-right: 30%;
+    margin:auto;
     border-radius: 8px;
     width: 20%;
 }
 
 .login-link{
     text-decoration:none;
+    margin-right: 20cm;
 }
 
 .svg-wrapper {
@@ -44,3 +45,4 @@ h5 {
     align-items: center;
     margin-top: 1rem;
 }
+

@@ -98,3 +98,29 @@
         border: 2px solid #a9a9a9; /* Change #0096EE to the color you want on hover */
         /* Other styling properties for hover state */
     }
+
+@media (max-width: 576px) {
+    .card-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .event-card {
+        width: 100%;
+        max-width: 400px;
+        margin: 0 auto 1rem auto;
+        padding: 1rem;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        background-color: #fff;
+        box-sizing: border-box;
+    }
+
+    .card-image img {
+        width: 270px!important;
+        height: auto;
+        border-radius: 6px;
+        object-fit: cover;
+    }
+}

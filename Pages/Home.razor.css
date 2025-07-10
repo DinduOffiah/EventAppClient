@@ -128,4 +128,32 @@ b{
         width: 200%;
         margin-left: -1.7cm;
     }
+
+    .card, .carousel-card, .section-container {
+        width: 100% !important;
+        height: auto;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 1rem;
+    }
+
+    .card-img-top {
+        height: auto;
+        object-fit: cover;
+    }
+
+    .card-body {
+        position: relative;
+        padding: 1rem;
+        background: rgba(0,0,0,0.9);
+    }
+
+    .carousel-item .d-flex {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .carousel-card {
+        margin-bottom: 1rem;
+    }
 }
